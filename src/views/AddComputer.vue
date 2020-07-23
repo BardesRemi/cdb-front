@@ -1,20 +1,21 @@
 <template>
   <div class="addComputer">
     <span>C'est la page AddComputer</span>
-    <ComputerInputForm :computer=computer></ComputerInputForm>
+    <ComputerInputForm :computer="computer" :submitFunction="submitFunction"></ComputerInputForm>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import ComputerInputForm from '@/components/ComputerInputForm.vue'
-import Computer from '@/model/Computer.js'
+import ComputerInputForm from '../components/ComputerInputForm.vue'
+import Computer from '../model/Computer.js'
+import { computerService } from '../api/ComputerService'
 
 export default {
-  name: 'Home',
+  name: 'AddComputer',
   data () {
     return {
-      computer: new Computer(0, 'Coucou')
+      computer: new Computer(0, ''),
+      submitFunction (computer) { const newComputer = { ...computer, id: undefined }; computerService.create(newComputer) }
     }
   },
   components: {
