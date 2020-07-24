@@ -1,10 +1,12 @@
 <template>
+<v-row no-gutters justify="space-around">
   <div class="computer">
     <input v-model="search"/><br/>
     <v-simple-table class="table"
                     :fixed-header="true"
                     :height="500"
     >
+     <v-col>
       <template v-slot:default>
         <thead>
         <tr>
@@ -23,9 +25,14 @@
         </tr>
         </tbody>
       </template>
+      </v-col>
     </v-simple-table>
-         <v-pagination :length="15" v-model="page" @input="update" :total-visible="7"></v-pagination>
+    <v-col>
+    <v-pagination :length="15" v-model="page" @input="update" :total-visible="7">
+    </v-pagination>
+    </v-col>
   </div>
+  </v-row>
 </template>
 <script>
 import axios from 'axios'
