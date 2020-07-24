@@ -4,25 +4,50 @@
       <fieldset>
         <div id="name">
           <label for="nameInput">Name </label>
-          <input id="nameInput" type="text" v-model="computer.name" placeholder="Name" required/>
+          <v-text-field id="nameInput" v-model="computer.name" :rules="rules" placeholder="Name" required ></v-text-field>
         </div>
         <div id="introduced">
-          <label for="introducedInput">Introduction date </label>
-          <input id="introducedInput" type="date" v-model="computer.introduced" placeholder="Introduced date"/>
+          <v-expansion-panels>
+          <v-expansion-panel>
+            <v-expansion-panel-header>Introduction date</v-expansion-panel-header>
+            <v-expansion-panel-content>
+                     <v-date-picker
+                v-model="computer.introduced"
+                :allowed-dates="allowedDates"
+                class="mt-4"
+                min="1970-01-01"
+                max="2031-01-01"
+              ></v-date-picker>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+          </v-expansion-panels>
+
         </div>
         <div id="discontinued">
-          <label for="discontinuedInput">Discontinued date </label>
-          <input id="discontinuedInput" type="date" v-model="computer.discontinued" placeholder="Discontinued date"/>
+          <v-expansion-panels>
+          <v-expansion-panel>
+            <v-expansion-panel-header>Discontinued date</v-expansion-panel-header>
+            <v-expansion-panel-content>
+                     <v-date-picker
+                v-model="computer.discontinued"
+                :allowed-dates="allowedDates"
+                class="mt-4"
+                min="1970-01-01"
+                max="2031-01-01"
+              ></v-date-picker>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+          </v-expansion-panels>
         </div>
         <div id="company">
           <label for="companyId">Company </label>
-          <select v-model="idCompanyList" id="companyId" name="companyId" >
+          <v-select v-model="idCompanyList" id="companyId" name="companyId" >
               <option :value="-1">--</option>
               <option v-for="(company, id) in companyList" :key="id" :value="id">{{company.name}}</option>
-          </select>
+          </v-select>
         </div>
       </fieldset>
-      <button type="submit">Submit</button>
+      <v-btn small color="primary" type="submit">Submit</v-btn>
     </form>
   </div>
 </template>
