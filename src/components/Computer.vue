@@ -16,33 +16,46 @@
         </thead>
         <tbody>
         <tr v-for="computer in computers" :key="computer">
-          <td v-for="value in computer" :key="value">{{ value }}</td>
+          <td> {{computer.name}}</td>
+          <td v-if="computer.introduced !== null"> {{computer.introduced}}</td>  <td v-else> </td>
+          <td v-if="computer.discontinued !== null"> {{computer.discontinued}}</td> <td v-else> </td>
+          <td v-if="computer.companyDTO !== null"> {{computer.companyDTO.name}}</td>
         </tr>
         </tbody>
       </template>
     </v-simple-table>
+         <v-pagination :length="15" v-model="page" @input="update" :total-visible="7"></v-pagination>
   </div>
 </template>
-
 <script>
+import axios from 'axios'
 export default {
   name: 'Computer',
   data () {
     return {
-      computers: [
-        { nom: 'ordi1', introduced: "aujourd'hui", discontinued: 'demain', companyName: 'company1' },
-        { nom: 'ordi2', introduced: "aujourd'hui1", discontinued: 'demain1', companyName: 'company2' },
-        { nom: 'ordi1', introduced: "aujourd'hui", discontinued: 'demain', companyName: 'company1' },
-        { nom: 'ordi2', introduced: "aujourd'hui1", discontinued: 'demain1', companyName: 'company2' },
-        { nom: 'ordi1', introduced: "aujourd'hui", discontinued: 'demain', companyName: 'company1' },
-        { nom: 'ordi2', introduced: "aujourd'hui1", discontinued: 'demain1', companyName: 'company2' },
-        { nom: 'ordi1', introduced: "aujourd'hui", discontinued: 'demain', companyName: 'company1' },
-        { nom: 'ordi2', introduced: "aujourd'hui1", discontinued: 'demain1', companyName: 'company2' },
-        { nom: 'ordi1', introduced: "aujourd'hui", discontinued: 'demain', companyName: 'company1' },
-        { nom: 'ordi2', introduced: "aujourd'hui1", discontinued: 'demain1', companyName: 'company2' },
-        { nom: 'ordi1', introduced: "aujourd'hui", discontinued: 'demain', companyName: 'company1' },
-        { nom: 'ordi2', introduced: "aujourd'hui1", discontinued: 'demain1', companyName: 'company2' }],
+      page: 2,
+      computers: [],
       search: ''
+    }
+  },
+  mounted () {
+    axios
+      .get('http://10.0.1.248:8081/computer-database/computers?page=' + this.page)
+      .then(response => (this.computers = response.data)).catch(error => console.log(error))
+  },
+  methods: {
+    update: function () {
+      axios
+        .get('http://10.0.1.248:8081/computer-database/computers?page=' + this.page)
+        .then(response => (this.computers = response.data)).catch(error => console.log(error))
+    },
+    previousPage: function () {
+      this.page -= 1
+      this.update()
+    },
+    nextPage: function () {
+      this.page += 1
+      this.update()
     }
   }
 }
