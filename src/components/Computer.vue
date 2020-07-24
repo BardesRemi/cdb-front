@@ -6,7 +6,6 @@
                     :fixed-header="true"
                     :height="500"
     >
-     <v-col>
       <template v-slot:default>
         <thead>
         <tr>
@@ -19,13 +18,12 @@
         <tbody>
         <tr v-for="computer in computers" :key="computer">
           <td> {{computer.name}}</td>
-          <td v-if="computer.introduced !== null"> {{computer.introduced}}</td>  <td v-else> </td>
-          <td v-if="computer.discontinued !== null"> {{computer.discontinued}}</td> <td v-else> </td>
-          <td v-if="computer.companyDTO !== null"> {{computer.companyDTO.name}}</td>
+          <td v-if="computer.introduced !== null"> {{computer.introduced}}</td>  <td v-else>none</td>
+          <td v-if="computer.discontinued !== null"> {{computer.discontinued}}</td> <td v-else>none </td>
+          <td v-if="computer.companyDTO !== null"> {{computer.companyDTO.name}}</td> <td v-else>none </td>
         </tr>
         </tbody>
       </template>
-      </v-col>
     </v-simple-table>
     <v-col>
     <v-pagination :length="15" v-model="page" @input="update" :total-visible="7">
@@ -49,6 +47,7 @@ export default {
     axios
       .get('http://10.0.1.248:8081/computer-database/computers?page=' + this.page)
       .then(response => (this.computers = response.data)).catch(error => console.log(error))
+    console.log(this.computers)
   },
   methods: {
     update: function () {
