@@ -15,7 +15,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="computer in computerSearch" :key="computer">
+        <tr v-for="computer in computers" :key="computer">
           <td v-for="value in computer" :key="value">{{ value }}</td>
         </tr>
         </tbody>
@@ -43,11 +43,6 @@ export default {
         { nom: 'ordi1', introduced: "aujourd'hui", discontinued: 'demain', companyName: 'company1' },
         { nom: 'ordi2', introduced: "aujourd'hui1", discontinued: 'demain1', companyName: 'company2' }],
       search: ''
-    }
-  },
-  computed () {
-    computerSearch() {
-      return this.computers.filter(computer => computer.nom.toLowerCase().includes(this.search.toLowerCase()));
     }
   }
 }
