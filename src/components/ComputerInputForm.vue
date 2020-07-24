@@ -45,10 +45,10 @@ export default {
     submit (event) {
       event.preventDefault()
       console.log('Submit du computer')
-      this.computer.company = this.companyList[this.idCompanyList]
+      this.computer.companyDTO = this.companyList[this.idCompanyList]
       this.submitFunction(this.computer)
     },
-    setIdCompanyList () { this.idCompanyList = this.companyList.findIndex(company => this.computer.company !== null && company.name === this.computer.company.name) }
+    setIdCompanyList () { this.idCompanyList = this.companyList.findIndex(company => this.computer.companyDTO !== null && company.name === this.computer.companyDTO.name) }
   },
   props: {
     computer: Computer,

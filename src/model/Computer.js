@@ -4,7 +4,7 @@ class Computer {
     this.name = name
     this.introduced = ''
     this.discontinued = ''
-    this.company = null
+    this.companyDTO = null
   }
 }
 
