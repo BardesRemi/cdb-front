@@ -22,6 +22,11 @@ const routes = [
     path: '/addComputer',
     name: 'AddComputer',
     component: () => import('../views/AddComputer.vue')
+  },
+  {
+    path: '/editComputer',
+    name: 'EditComputer',
+    component: () => import('../views/EditComputer.vue')
   }
 ]
 

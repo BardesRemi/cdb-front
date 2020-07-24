@@ -9,8 +9,16 @@ export class ComputerService {
     return this.axios.get('/computers?page=' + page)
   }
 
+  findById (id) {
+    return this.axios.get('/computers/' + id)
+  }
+
   create (newComputer) {
     return this.axios.post('/computers', newComputer, { headers: { 'Content-Type': 'application/json' } })
+  }
+
+  edit (computer) {
+    return this.axios.put('/computers', computer, { headers: { 'Content-Type': 'application/json' } })
   }
 
   delete (id) {
