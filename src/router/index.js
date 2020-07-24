@@ -21,12 +21,12 @@ const routes = [
   {
     path: '/addComputer',
     name: 'AddComputer',
-    component: () => import('../views/AddComputer.vue')
+    component: () => import(/* webpackChunkName: "addComputer" */'../views/AddComputer.vue')
   },
   {
     path: '/editComputer',
     name: 'EditComputer',
-    component: () => import('../views/EditComputer.vue')
+    component: () => import(/* webpackChunkName: "editComputer" */'../views/EditComputer.vue')
   }
 ]
 
