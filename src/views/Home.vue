@@ -1,18 +1,26 @@
+  <style>
+  @import '../assets/Home.css';
+  </style>
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="Home">
+    <img alt="Vue logo" src="../assets/excilys.png">
+    <h1>Welcome to CDB user {{info}}</h1>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import axios from 'axios'
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  data () {
+    return {
+      info: null
+    }
+  },
+  mounted () {
+    axios
+      .get('http://localhost:8080/computer-database/user')
+      .then(response => (this.info = response.data.name)).catch(error => console.log(error))
   }
 }
 </script>
