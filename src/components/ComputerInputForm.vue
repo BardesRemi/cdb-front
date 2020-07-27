@@ -41,9 +41,7 @@
         </div>
         <div id="company">
           <label for="companyId">Company </label>
-          <v-select v-model="idCompanyList" id="companyId" name="companyId" :items="companyList" item-text="companyList" item-value="companyList.id">
-              <option :value="-1">--</option>
-              <option v-for="(company, id) in companyList" :key="id" :value="id">{{company.name}}</option>
+          <v-select v-model="idCompanyList" id="companyId" name="companyId" :items="companyList" item-text="name" item-value="id">
           </v-select>
         </div>
       </fieldset>
@@ -73,7 +71,10 @@ export default {
       this.computer.companyDTO = this.companyList[this.idCompanyList]
       this.submitFunction(this.computer)
     },
-    setIdCompanyList () { this.idCompanyList = this.companyList.findIndex(company => this.computer.companyDTO !== null && company.name === this.computer.companyDTO.name) }
+    setIdCompanyList () {
+      this.idCompanyList = this.companyList.findIndex(company => this.computer.companyDTO !== null && company.name === this.computer.companyDTO.name)
+      console.log(this.companyList)
+    }
   },
   props: {
     computer: Computer,
