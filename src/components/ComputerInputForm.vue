@@ -4,48 +4,41 @@
       <fieldset>
         <div id="name">
           <label for="nameInput">Name </label>
-          <v-text-field id="nameInput" v-model="computer.name" :rules="rules" placeholder="Name" required ></v-text-field>
+          <v-text-field id="nameInput" v-model="computer.name" :rules="nameRules" placeholder="Name" required ></v-text-field>
         </div>
-        <div id="introduced">
-          <v-expansion-panels>
-          <v-expansion-panel>
-            <v-expansion-panel-header>Introduction date</v-expansion-panel-header>
-            <v-expansion-panel-content>
-                     <v-date-picker
-                v-model="computer.introduced"
-                :allowed-dates="allowedDates"
-                class="mt-4"
-                min="1970-01-01"
-                max="2031-01-01"
-              ></v-date-picker>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          </v-expansion-panels>
 
+        <div id="introduced">
+          <v-dialog ref="dialogIntro" v-model="dialog1" :return-value.sync="computer.introduced" persistent width="290px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field v-model="computer.introduced" label="Introduction date" prepend-icon="event" clearable readonly v-bind="attrs" v-on="on"/>
+            </template>
+            <v-date-picker v-model="computer.introduced" class="mt-4" min="1970-01-01" :max="maxAllowedDate">
+              <v-spacer></v-spacer>
+              <v-btn text color="primary" @click="dialog1 = false">Cancel</v-btn>
+              <v-btn text color="primary" @click="$refs.dialogIntro.save(computer.introduced)">OK</v-btn>
+            </v-date-picker>
+          </v-dialog>
         </div>
+
         <div id="discontinued">
-          <v-expansion-panels>
-          <v-expansion-panel>
-            <v-expansion-panel-header>Discontinued date</v-expansion-panel-header>
-            <v-expansion-panel-content>
-                     <v-date-picker
-                v-model="computer.discontinued"
-                :allowed-dates="allowedDates"
-                class="mt-4"
-                min="1970-01-01"
-                max="2031-01-01"
-              ></v-date-picker>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          </v-expansion-panels>
+           <v-dialog ref="dialogDiscont" v-model="dialog2" :return-value.sync="computer.discontinued" persistent width="290px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field :disabled="!isIntroSet" v-model="computer.discontinued" label="Discontinuation date" prepend-icon="event" clearable readonly v-bind="attrs" v-on="on"/>
+            </template>
+            <v-date-picker :disabled="!isIntroSet" v-model="computer.discontinued" class="mt-4" :min="minAllowedDate" max="2031-01-01">
+              <v-spacer></v-spacer>
+              <v-btn text color="primary" @click="dialog2 = false">Cancel</v-btn>
+              <v-btn text color="primary" @click="$refs.dialogDiscont.save(computer.discontinued)">OK</v-btn>
+            </v-date-picker>
+          </v-dialog>
         </div>
+
         <div id="company">
           <label for="companyId">Company </label>
-          <v-select v-model="idCompanyList" id="companyId" name="companyId" :items="companyList" item-text="name" item-value="id">
-          </v-select>
+          <v-select v-model="computer.companyDTO" :items="companyList" item-text="name" clearable return-object/>
         </div>
       </fieldset>
-      <v-btn small color="primary" type="submit">Submit</v-btn>
+      <v-btn small :disabled="!checksOk" color="primary" type="submit">Submit</v-btn>
     </form>
   </div>
 </template>
@@ -61,27 +54,44 @@ export default {
   data () {
     return {
       companyList: [],
-      idCompanyList: -1
+      nameRules: [
+        name => !!name || 'The name field is required',
+        name => /^[a-zA-Z0-9 \-/_+]+$/.test(name) || 'No special characters are allowed except " +-/_"'
+      ],
+      dialog1: false,
+      dialog2: false
     }
   },
   methods: {
     submit (event) {
       event.preventDefault()
       console.log('Submit du computer')
-      this.computer.companyDTO = this.companyList[this.idCompanyList]
       this.submitFunction(this.computer)
     },
-    setIdCompanyList () {
-      this.idCompanyList = this.companyList.findIndex(company => this.computer.companyDTO !== null && company.name === this.computer.companyDTO.name)
-      console.log(this.companyList)
-    }
+    resetDiscontinuedDate () { if (!this.computer.introduced) { this.computer.discontinued = undefined } } // Reset the discontinued date if no introduction date is set
   },
   props: {
     computer: Computer,
     submitFunction: Function
   },
+  computed: {
+    isIntroSet () { this.resetDiscontinuedDate(); return !!this.computer.introduced }, // Returns true if set
+    maxAllowedDate () { return this.computer.discontinued || '2031-01-01' },
+    minAllowedDate () { return this.computer.introduced || '1970-01-01' },
+    checksOk () { return !!this.computer.name && /^[a-zA-Z0-9 \-/_+]+$/.test(this.computer.name) }
+  },
   mounted () {
-    companyService.findAll().then(result => { this.companyList = result.data; this.setIdCompanyList() }, error => console.error(error))
+    companyService.findAll().then(result => { this.companyList = result.data }, error => console.error(error))
   }
 }
 </script>
+
+<style>
+.computerInputForm {
+  margin: 25px;
+}
+
+.computerInputForm > form > fieldset {
+  border: none;
+}
+</style>
