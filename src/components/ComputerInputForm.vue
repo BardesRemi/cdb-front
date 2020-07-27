@@ -41,7 +41,7 @@
         </div>
         <div id="company">
           <label for="companyId">Company </label>
-          <v-select v-model="idCompanyList" id="companyId" name="companyId" >
+          <v-select v-model="idCompanyList" id="companyId" name="companyId" :items="companyList" item-text="companyList" item-value="companyList.id">
               <option :value="-1">--</option>
               <option v-for="(company, id) in companyList" :key="id" :value="id">{{company.name}}</option>
           </v-select>
