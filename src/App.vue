@@ -8,20 +8,20 @@
       app
     >
       <v-list dense>
-        <v-list-item link>
+        <v-list-item link to="/">
           <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
+          <v-icon>mdi-home</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title> <router-link to="/" tag="button">Home</router-link></v-list-item-title>
+          <v-list-item-title> Home</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/about">
           <v-list-item-action>
             <v-icon>mdi-antenna</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title><router-link to="/about" tag="button">About</router-link></v-list-item-title>
+          <v-list-item-title>About</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
