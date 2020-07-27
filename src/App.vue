@@ -39,7 +39,6 @@
           contain
           src="assets/excilys.png"
           transition="scale-transition"
-          width="40"
         />
         <b>CBD</b>
       </div>
