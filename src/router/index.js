@@ -32,6 +32,16 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: () => import(/* webpackChunkName: "login" */'../views/Register.vue')
+  },
+  {
+    path: '/addComputer',
+    name: 'AddComputer',
+    component: () => import(/* webpackChunkName: "addComputer" */'../views/AddComputer.vue')
+  },
+  {
+    path: '/editComputer',
+    name: 'EditComputer',
+    component: () => import(/* webpackChunkName: "editComputer" */'../views/EditComputer.vue')
   }
 ]
 
