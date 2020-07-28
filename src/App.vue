@@ -2,45 +2,12 @@
   @import '/assets/Home.css';
   </style>
 <template>
-<<<<<<< HEAD
-  <v-app :style="{'background': 'rgb(156,156,193);','background': 'linear-gradient(90deg, rgba(156,156,193,1) 8%, rgba(148,213,224,1) 51%, rgba(187,224,232,1) 89%)'}">>
-        <v-navigation-drawer
-      v-model="drawer"
-      app
-    >
-      <v-list dense>
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title> <router-link to="/" tag="button">Home</router-link></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-antenna</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title><router-link to="/dashboard" tag="button">Dashboard</router-link></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar
-      app
-      color="cyan"
-      dark
-    >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-=======
   <v-app>
     <v-app-bar
       app
       color="primary"
       dark
     >
->>>>>>> dashboard
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"

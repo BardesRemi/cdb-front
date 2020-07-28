@@ -1,10 +1,7 @@
 <template>
 <v-row no-gutters justify="space-around">
   <div class="computer">
-<<<<<<< HEAD
-    <input v-model="search"/><br/>
-=======
-    <v-form >
+  <v-form >
           <v-container>
       <v-layout>
         <v-flex
@@ -23,7 +20,6 @@
       </v-layout>
       </v-container>
     </v-form>
->>>>>>> dashboard
     <v-simple-table class="table"
                     :fixed-header="true"
                     :height="500"
