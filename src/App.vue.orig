@@ -2,6 +2,18 @@
   @import '/assets/Home.css';
   </style>
 <template>
+<<<<<<< HEAD
+  <div id="app">
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> |
+      <router-link to="/login">Login</router-link> |
+      <router-link to="/register">Register</router-link>
+    </div>
+    <router-view/>
+  </div>
+</template>
+=======
   <v-app :style="{'background': 'rgb(156,156,193);','background': 'linear-gradient(90deg, rgba(156,156,193,1) 8%, rgba(148,213,224,1) 51%, rgba(187,224,232,1) 89%)'}">>
         <v-navigation-drawer
       v-model="drawer"
@@ -43,6 +55,7 @@
         />
         <b>CBD</b>
       </div>
+>>>>>>> origin/develop
 
       <v-spacer></v-spacer>
     </v-app-bar>
