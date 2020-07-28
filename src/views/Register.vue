@@ -1,6 +1,5 @@
 <template>
   <div class="login">
-    <img alt="Vue logo" src="../assets/logo.png">
     <RegisterForm msg="Ceci est le formulaire d'inscription"/>
   </div>
 </template>

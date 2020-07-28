@@ -24,6 +24,22 @@
             <v-list-item-title><router-link to="/dashboard" tag="button">Dashboard</router-link></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title><router-link to="/login" tag="button">Login</router-link></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-account-edit</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title><router-link to="/register" tag="button">Register</router-link></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-app-bar
@@ -43,8 +59,8 @@
         />
         <b>CBD</b>
       </div>
-
       <v-spacer></v-spacer>
+      <v-btn icon><router-link to="/login" tag="button"><v-icon>mdi-account</v-icon></router-link></v-btn>
     </v-app-bar>
 
     <v-main>

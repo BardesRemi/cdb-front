@@ -1,8 +1,7 @@
 <template>
   <div class="login">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <LoginForm msg="Ceci est le formulaire de login"/>
-    <button type="button" @click="redirectRegister">register</button>
+    <h1> Ceci est le formulaire de Login</h1>
+    <LoginForm/>
   </div>
 </template>
 
