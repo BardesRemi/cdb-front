@@ -3,17 +3,6 @@
   </style>
 <template>
 <<<<<<< HEAD
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/register">Register</router-link>
-    </div>
-    <router-view/>
-  </div>
-</template>
-=======
   <v-app :style="{'background': 'rgb(156,156,193);','background': 'linear-gradient(90deg, rgba(156,156,193,1) 8%, rgba(148,213,224,1) 51%, rgba(187,224,232,1) 89%)'}">>
         <v-navigation-drawer
       v-model="drawer"
@@ -36,31 +25,86 @@
             <v-list-item-title><router-link to="/dashboard" tag="button">Dashboard</router-link></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-account-edit</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title><router-link to="/addComputer" tag="button">Add Computer</router-link></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-account-edit</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title><router-link to="/editComputer" tag="button">Edit Computer</router-link></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title><router-link to="/login" tag="button">Login</router-link></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-account-edit</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title><router-link to="/register" tag="button">Register</router-link></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
+=======
+  <v-app>
+>>>>>>> origin/develop
     <v-app-bar
       app
-      color="cyan"
+      color="primary"
       dark
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
           class="shrink mr-2"
           contain
-          src="assets/excilys.png"
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
           transition="scale-transition"
           width="40"
         />
-        <b>CBD</b>
-      </div>
->>>>>>> origin/develop
 
+        <v-img
+          alt="Vuetify Name"
+          class="shrink mt-1 hidden-sm-and-down"
+          contain
+          min-width="100"
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
+          width="100"
+        />
+      </div>
       <v-spacer></v-spacer>
+<<<<<<< HEAD
+      <v-btn icon><router-link to="/login" tag="button"><v-icon>mdi-account</v-icon></router-link></v-btn>
+=======
+
+      <v-btn
+        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        target="_blank"
+        text
+      >
+        <span class="mr-2">Latest Release</span>
+        <v-icon>mdi-open-in-new</v-icon>
+      </v-btn>
+>>>>>>> origin/develop
     </v-app-bar>
 
     <v-main>
+      <router-link to='/'>Home</router-link> |
+      <router-link to='/dashboard'>Dashboard</router-link>
       <router-view/>
     </v-main>
   </v-app>
@@ -70,13 +114,12 @@
 
 export default {
   name: 'App',
-  props: {
-    source: String
-  },
+
   components: {
   },
+
   data: () => ({
-    drawer: null
+    //
   })
 }
 </script>

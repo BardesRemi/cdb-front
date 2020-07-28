@@ -1,4 +1,4 @@
-  <style>
+    <style>
   @import '/assets/Home.css';
   </style>
 <template>
@@ -8,52 +8,44 @@
       app
     >
       <v-list dense>
-        <v-list-item link>
+        <v-list-item link to="/">
           <v-list-item-action>
             <v-icon>mdi-home</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title> <router-link to="/" tag="button">Home</router-link></v-list-item-title>
+            <v-list-item-title>Home</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/dashboard">
           <v-list-item-action>
             <v-icon>mdi-antenna</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title><router-link to="/dashboard" tag="button">Dashboard</router-link></v-list-item-title>
+            <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/addComputer">
           <v-list-item-action>
-            <v-icon>mdi-account-edit</v-icon>
+            <v-icon>mdi-monitor-clean</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title><router-link to="/addComputer" tag="button">Add Computer</router-link></v-list-item-title>
+            <v-list-item-title>Add Computer</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-account-edit</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title><router-link to="/editComputer" tag="button">Edit Computer</router-link></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/login">
           <v-list-item-action>
             <v-icon>mdi-account</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title><router-link to="/login" tag="button">Login</router-link></v-list-item-title>
+            <v-list-item-title>Login</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/register">
           <v-list-item-action>
             <v-icon>mdi-account-edit</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title><router-link to="/register" tag="button">Register</router-link></v-list-item-title>
+            <v-list-item-title>Register</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -86,7 +78,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'App',
   props: {
