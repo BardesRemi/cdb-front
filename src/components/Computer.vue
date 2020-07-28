@@ -92,6 +92,7 @@ export default {
       this.update()
     },
     searcher: function () {
+      this.page = 1
       axios.get('http://10.0.1.248:8081/computer-database/computers/search?page=1&name=' + this.search)
         .then(response => (this.computers = response.data)).catch(error => console.log(error))
       axios.get('http://10.0.1.248:8081/computer-database/computers/nbsearch?name=' + this.search)
