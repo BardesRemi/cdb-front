@@ -37,9 +37,9 @@
             :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.match]"
             :type="show2 ? 'text' : 'password'"
-            label="Password2"
-            hint="required"
-            @click:append="show1 = !show1"
+            label="Confirm password"
+            hint="required and equal to password"
+            @click:append="show2 = !show2"
           ></v-text-field>
         </v-col>
     </v-container>
@@ -57,7 +57,7 @@
 
 <script>
 export default {
-  name: 'LoginForm',
+  name: 'RegisterForm',
   props: {
 
   },
@@ -79,15 +79,13 @@ export default {
   },
 
   methods: {
-    submit () {
-      this.$refs.form.submit()
-    },
-    redirectRegister () {
-      this.$router.push({ name: 'Register' })
+    register () {
+
     },
     clear () {
       this.username = ''
       this.password = ''
+      this.password2 = ''
     }
   },
 
