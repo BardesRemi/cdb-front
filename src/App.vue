@@ -26,6 +26,22 @@
         </v-list-item>
         <v-list-item link>
           <v-list-item-action>
+            <v-icon>mdi-account-edit</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title><router-link to="/addComputer" tag="button">Add Computer</router-link></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-account-edit</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title><router-link to="/editComputer" tag="button">Edit Computer</router-link></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-action>
             <v-icon>mdi-account</v-icon>
           </v-list-item-action>
           <v-list-item-content>
