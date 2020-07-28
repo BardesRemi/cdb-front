@@ -35,7 +35,7 @@
         </thead>
         <tbody>
         <tr v-for="computer in computers" :key="computer.id">
-          <td> {{computer.name}}</td>
+          <td> <router-link :to="{path : 'editComputer', query : {id :computer.id}}">{{computer.name}}</router-link></td>
           <td v-if="computer.introduced !== null"> {{computer.introduced}}</td>  <td v-else>none</td>
           <td v-if="computer.discontinued !== null"> {{computer.discontinued}}</td> <td v-else>none </td>
           <td v-if="computer.companyDTO !== null"> {{computer.companyDTO.name}}</td> <td v-else>none </td>
