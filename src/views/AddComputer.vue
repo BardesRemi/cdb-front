@@ -1,6 +1,6 @@
 <template>
   <div class="addComputer">
-    <span>C'est la page AddComputer</span>
+    <h1>Add a computer</h1>
     <ComputerInputForm :computer="computer" :submitFunction="submitFunction"></ComputerInputForm>
   </div>
 </template>
@@ -23,3 +23,12 @@ export default {
   }
 }
 </script>
+<style>
+.addComputer > h1 {
+  text-align: center;
+}
+
+.addComputer {
+  background-color: rgba(244, 244, 244, 0.8);
+}
+</style>
