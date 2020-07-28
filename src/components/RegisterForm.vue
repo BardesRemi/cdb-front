@@ -73,7 +73,7 @@ export default {
       rules: {
         required: v => !!v || 'Required',
         max: v => v.length <= 24 || 'UserName must be less than 25 characters',
-        match: v => (v!! && v) === this.password || 'Password do not match'
+        match: v => (!!v && v) === this.password || 'Password do not match'
       }
     }
   },
