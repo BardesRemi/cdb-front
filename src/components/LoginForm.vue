@@ -1,23 +1,19 @@
 <template>
   <div class="loginForm">
-    <v-btn class="register-btn" @click="redirectRegister">Register</v-btn>
-    <v-form ref="form" v-model="valid" lazy-validation>
-    <v-container>
-        <v-col
-          cols="4"
-          md="3"
-        >
+    <v-card
+      class="card-log-form"
+      max-width="340"
+      hover
+      shaped
+    >
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <v-container>
           <v-text-field
             v-model="username"
             :rules="[rules.required, rules.max]"
             :counter="24"
             label="Username"
           ></v-text-field>
-        </v-col>
-        <v-col
-          cols="4"
-          md="3"
-        >
           <v-text-field
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -27,17 +23,13 @@
             hint="required"
             @click:append="show1 = !show1"
           ></v-text-field>
-        </v-col>
-    </v-container>
-  </v-form>
-    <v-row rows="1">
-      <v-col cols="3" md="1">
-        <v-btn class="clear-btn" @click="clear">clear</v-btn>
-      </v-col>
-      <v-col cols="3" md="1">
-        <v-btn class="login-btn" :disabled="!valid" @click="submit">login</v-btn>
-      </v-col>
-    </v-row>
+        </v-container>
+      </v-form>
+      <v-card-actions >
+        <v-btn class="register-btn" @click="redirectRegister" color="warning">Register</v-btn>
+        <v-btn class="login-btn" :disabled="!valid" @click="submit" color="success">login</v-btn>
+      </v-card-actions>
+    </v-card>
   </div>
 </template>
 
@@ -63,14 +55,10 @@ export default {
 
   methods: {
     submit () {
-      this.$refs.form.submit()
+      this.$refs.form.validate()
     },
     redirectRegister () {
       this.$router.push({ name: 'Register' })
-    },
-    clear () {
-      this.username = ''
-      this.password = ''
     }
   },
 
@@ -81,4 +69,7 @@ export default {
 </script>
 
 <style scoped>
+  .loginForm {
+    margin-left:10px;
+  }
 </style>
