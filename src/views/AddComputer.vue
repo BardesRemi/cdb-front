@@ -33,12 +33,3 @@ export default {
   }
 }
 </script>
-<style>
-.addComputer > h1 {
-  text-align: center;
-}
-
-.addComputer {
-  background-color: rgba(244, 244, 244, 0.8);
-}
-</style>
