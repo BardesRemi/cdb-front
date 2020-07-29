@@ -126,6 +126,10 @@ export default {
           )
           .then((response) => (this.computers = response.data))
           .catch((error) => console.log(error))
+        axios
+          .get('http://10.0.1.248:8081/computer-database/computers/nb')
+          .then((response) => (this.nb_page = response.data.nb))
+          .catch((error) => console.log(error))
       } else {
         axios
           .get(
