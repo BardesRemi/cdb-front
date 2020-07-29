@@ -1,7 +1,7 @@
 <template>
   <div class="editComputer">
     <span>C'est la page EditComputer</span>
-    <ComputerInputForm :computer="computer" :submitFunction="submitFunction"></ComputerInputForm>
+    <ComputerInputForm :computer="computer" :submitFunction="submitFunction" @exit="resendEvent()"></ComputerInputForm>
   </div>
 </template>
 
@@ -12,20 +12,28 @@ import { computerService } from '../api/ComputerService'
 
 export default {
   name: 'EditComputer',
+  props: {
+    id: Number
+  },
   data () {
     return {
       computer: new Computer(0, ''),
-      submitFunction (computer) { computerService.edit(computer) }
+      submitFunction (computer) {
+        computerService.edit(computer)
+        this.$emit('exit', 'tabernak')
+      }
     }
   },
   components: {
     ComputerInputForm
   },
-  props: {
-    id: Number
+  methods: {
+    resendEvent: function () {
+      this.$emit('exit', 'EditComputer')
+    }
   },
   mounted () {
-    computerService.findById(this.$route.query.id).then(result => { this.computer = result.data }, error => console.error(error))
+    computerService.findById(this.id).then(result => { this.computer = result.data }, error => console.error(error))
   }
 }
 </script>
