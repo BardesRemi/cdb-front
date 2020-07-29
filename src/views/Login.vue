@@ -1,6 +1,5 @@
 <template>
   <div class="login">
-    <h1> Ceci est le formulaire de Login</h1>
     <LoginForm/>
   </div>
 </template>
