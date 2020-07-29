@@ -1,0 +1,18 @@
+{
+  "editComputer" : "edition d'ordinateur",
+  "addComputer" : "ajouter un ordinateur",
+  "submit": "Valider",
+  "add": "ajout d'ordinateur",
+  "name": "Nom",
+  "introduced": "Date d'introduction",
+  "discontinued": "Date d'introduction",
+  "company" : "Nom de l'entreprise",
+  "cancel" : "Annuler",
+  "introduction" : "date d'introduction",
+  "discontinuation" : "date de discontinuation",
+  "company_form" : "entreprise",
+  "ok" : "ok"
+    
+
+  
+}

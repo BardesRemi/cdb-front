@@ -5,18 +5,18 @@
         <v-container>
           <v-layout>
             <v-flex xs12 md4>
-              <v-text-field v-model="search">Search</v-text-field>
+              <v-text-field v-model="search"> </v-text-field>
             </v-flex>
             <v-flex xs12 md4>
-              <v-btn v-on:click="searcher" small>Submit</v-btn>
+              <v-btn v-on:click="searcher" small>{{ $t("submit") }}</v-btn>
             </v-flex>
             <v-flex xs12 md4>
               <v-dialog v-model="addComputerDialog">
                 <template v-slot:activator="{ on }">
-                  <v-btn v-on="on" small>add a new computer</v-btn>
+                  <v-btn v-on="on" small>{{ $t("addComputer") }}</v-btn>
                 </template>
                 <v-card>
-                  <v-card-title class="headline grey lighten-2 justify-center">Add new computer</v-card-title>
+                  <v-card-title class="headline grey lighten-2 justify-center">{{ $t("addComputer") }}</v-card-title>
                   <v-card-text>
                     <AddComputer @exit="closeAddPopup()"></AddComputer>
                   </v-card-text>
@@ -30,10 +30,10 @@
         <template v-slot:default>
           <thead>
             <tr>
-              <th class="text-left">Name</th>
-              <th class="text-left">Introduced</th>
-              <th class="text-left">Discontinued</th>
-              <th class="text-left">Company Name</th>
+              <th class="text-left">{{ $t("name") }}</th>
+              <th class="text-left">{{ $t("introduced") }}</th>
+              <th class="text-left">{{ $t("discontinued") }}</th>
+              <th class="text-left">{{ $t("company") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -50,7 +50,7 @@
                   <td v-on="on" v-else></td>
                 </template>
                 <v-card>
-                  <v-card-title class="headline grey lighten-2 justify-center"  >EditComputer</v-card-title>
+                  <v-card-title class="headline grey lighten-2 justify-center"  >{{ $t("editComputer") }}</v-card-title>
                   <v-card-text>
                     <EditComputer :id="parseInt(computer.id)" @exit="closeEditPopup(computer.id)"></EditComputer>
                   </v-card-text>
@@ -76,6 +76,7 @@
 import axios from 'axios'
 import EditComputer from '../views/EditComputer.vue'
 import AddComputer from '../views/AddComputer.vue'
+
 export default {
   name: 'Computer',
   data () {

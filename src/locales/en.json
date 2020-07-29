@@ -1,0 +1,18 @@
+{
+  "editComputer" : "Edit Computer",
+  "addComputer" : "Add new computer",
+  "submit": "Submit",
+  "add": "Add a new Computer",
+  "name": "Name",
+  "introduced": "Introduced",
+  "discontinued": "Discontinued",
+  "company" : "Company name",
+  "cancel" : "cancel",
+  "introduction" : "Introduction date",
+  "discontinuation" : "Discontinuation date",
+  "company_form" : "company",
+  "ok" : "ok"
+    
+
+  
+}
