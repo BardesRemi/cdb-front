@@ -19,8 +19,10 @@ export default {
     return {
       computer: new Computer(0, ''),
       submitFunction (computer) {
-        computerService.edit(computer)
-        this.$emit('exit', 'tabernak')
+        computerService.edit(computer).then(result => this.$emit('exit'), error => {
+          alert('Network error while trying to update the computer')
+          console.log(error)
+        })
       }
     }
   },
@@ -29,7 +31,7 @@ export default {
   },
   methods: {
     resendEvent: function () {
-      this.$emit('exit', 'EditComputer')
+      this.$emit('exit')
     }
   },
   mounted () {

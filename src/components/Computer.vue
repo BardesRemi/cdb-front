@@ -39,7 +39,7 @@
                 <v-card>
                   <v-card-title class="headline grey lighten-2" primary-title>EditComputer</v-card-title>
                   <v-card-text>
-                    <EditComputer :id="parseInt(computer.id)" @exit="test(computer.id)"></EditComputer>
+                    <EditComputer :id="parseInt(computer.id)" @exit="closeEditPopup(computer.id)"></EditComputer>
                   </v-card-text>
                 </v-card>
               </v-dialog>
@@ -93,9 +93,9 @@ export default {
       .catch((error) => console.log(error))
   },
   methods: {
-    test: function (id) {
+    closeEditPopup: function (id) {
+      this.update()
       this.$set(this.dialog, id, false)
-      this.$forceUpdate()
     },
     update: function () {
       if (this.presearch) {
