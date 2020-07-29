@@ -1,6 +1,5 @@
 <template>
   <div class="editComputer">
-    <span>C'est la page EditComputer</span>
     <ComputerInputForm :computer="computer" :submitFunction="submitFunction" @exit="resendEvent()"></ComputerInputForm>
   </div>
 </template>
@@ -39,3 +38,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.editComputer > h1 {
+  text-align: center;
+}
+</style>

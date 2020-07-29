@@ -38,7 +38,9 @@
           <v-select v-model="computer.companyDTO" :items="companyList" item-text="name" clearable return-object/>
         </div>
       </fieldset>
-      <v-btn small :disabled="!checksOk" color="primary" type="submit">Submit</v-btn>
+      <div id="submitButton">
+        <v-btn small :disabled="!checksOk" color="primary" type="submit">Submit</v-btn>
+      </div>
     </form>
   </div>
 </template>
@@ -93,5 +95,10 @@ export default {
 
 .computerInputForm > form > fieldset {
   border: none;
+}
+
+#submitButton {
+  display: flex;
+  justify-content: center;
 }
 </style>

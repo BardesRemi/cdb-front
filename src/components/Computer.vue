@@ -30,14 +30,14 @@
                   <td v-on="on">{{computer.name}}</td>
 
                   <td v-on="on" v-if="computer.companyDTO !== null">{{computer.companyDTO.name}}</td>
-                  <td v-on="on" v-else>none</td>
+                  <td v-on="on" v-else></td>
                   <td v-on="on" v-if="computer.discontinued !== null">{{computer.discontinued}}</td>
-                  <td v-on="on" v-else>none</td>
+                  <td v-on="on" v-else></td>
                   <td v-on="on" v-if="computer.introduced !== null">{{computer.introduced}}</td>
-                  <td v-on="on" v-else>none</td>
+                  <td v-on="on" v-else></td>
                 </template>
                 <v-card>
-                  <v-card-title class="headline grey lighten-2" primary-title>EditComputer</v-card-title>
+                  <v-card-title class="headline grey lighten-2 justify-center"  >EditComputer</v-card-title>
                   <v-card-text>
                     <EditComputer :id="parseInt(computer.id)" @exit="closeEditPopup(computer.id)"></EditComputer>
                   </v-card-text>
@@ -157,5 +157,7 @@ th {
   background: cornflowerblue;
   color: white;
   cursor: pointer;
+
 }
+
 </style>

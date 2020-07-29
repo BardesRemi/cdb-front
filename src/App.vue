@@ -1,6 +1,6 @@
-    <style>
-  @import '/assets/Home.css';
-  </style>
+<style>
+  @import './assets/Home.css';
+</style>
 <template>
   <v-app :style="{'background': 'rgb(156,156,193);','background': 'linear-gradient(90deg, rgba(156,156,193,1) 8%, rgba(148,213,224,1) 51%, rgba(187,224,232,1) 89%)'}">>
         <v-navigation-drawer
