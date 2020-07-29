@@ -1,7 +1,6 @@
 <template>
   <div class="addComputer">
-    <h1>Add a computer</h1>
-    <ComputerInputForm :computer="computer" :submitFunction="submitFunction"></ComputerInputForm>
+    <ComputerInputForm :computer="computer" :submitFunction="submitFunction" @exit="resendEvent()"></ComputerInputForm>
   </div>
 </template>
 
@@ -15,11 +14,22 @@ export default {
   data () {
     return {
       computer: new Computer(0, ''),
-      submitFunction (computer) { const newComputer = { ...computer, id: undefined }; computerService.create(newComputer) }
+      submitFunction (computer) {
+        const newComputer = { ...computer, id: undefined }
+        computerService.create(newComputer).then(result => this.$emit('exit'), error => {
+          alert('Network error while trying to update the computer')
+          console.log(error)
+        })
+      }
     }
   },
   components: {
     ComputerInputForm
+  },
+  methods: {
+    resendEvent: function () {
+      this.$emit('exit')
+    }
   }
 }
 </script>

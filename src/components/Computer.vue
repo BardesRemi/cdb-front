@@ -10,6 +10,19 @@
             <v-flex xs12 md4>
               <v-btn v-on:click="searcher" small>Submit</v-btn>
             </v-flex>
+            <v-flex xs12 md4>
+              <v-dialog v-model="addComputerDialog">
+                <template v-slot:activator="{ on }">
+                  <v-btn v-on="on" small>add a new computer</v-btn>
+                </template>
+                <v-card>
+                  <v-card-title class="headline grey lighten-2 justify-center">Add new computer</v-card-title>
+                  <v-card-text>
+                    <AddComputer @exit="closeAddPopup()"></AddComputer>
+                  </v-card-text>
+                </v-card>
+              </v-dialog>
+            </v-flex>
           </v-layout>
         </v-container>
       </v-form>
@@ -62,10 +75,12 @@
 <script>
 import axios from 'axios'
 import EditComputer from '../views/EditComputer.vue'
+import AddComputer from '../views/AddComputer.vue'
 export default {
   name: 'Computer',
   data () {
     return {
+      addComputerDialog: false,
       dialog: {},
       on: true,
       nb_page: 15,
@@ -77,7 +92,8 @@ export default {
     }
   },
   components: {
-    EditComputer
+    EditComputer,
+    AddComputer
   },
   mounted () {
     axios
@@ -93,6 +109,10 @@ export default {
       .catch((error) => console.log(error))
   },
   methods: {
+    closeAddPopup: function () {
+      this.update()
+      this.addComputerDialog = false
+    },
     closeEditPopup: function (id) {
       this.update()
       this.$set(this.dialog, id, false)
