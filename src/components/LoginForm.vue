@@ -69,4 +69,7 @@ export default {
 </script>
 
 <style scoped>
+  .loginForm {
+    margin-left:10px;
+  }
 </style>
