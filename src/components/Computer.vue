@@ -69,7 +69,7 @@
       </v-simple-table>
       <v-col>
         <v-pagination
-          :length="parseInt(nb_page/10,10)+1"
+          :length="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
           v-model="page"
           @input="update"
           :total-visible="7"
@@ -136,8 +136,8 @@ export default {
           error => { alert('Error when deleting computer : ' + error); this.update() }
         )
       } else {
-        alert('Selected computers have been deleted')
         this.update()
+        alert('Selected computers have been deleted')
       }
     },
     closeAddPopup: function () {
