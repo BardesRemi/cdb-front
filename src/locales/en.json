@@ -11,7 +11,16 @@
   "introduction" : "Introduction date",
   "discontinuation" : "Discontinuation date",
   "company_form" : "company",
-  "ok" : "ok"
+  "ok" : "ok",
+  "password" : "Password",
+  "required" : "required",
+  "register" : "register",
+  "login" : "login",
+  "username" : "Username",
+  "confirmpassword" : "Confirmation du mot de passe"
+
+  
+
     
 
   

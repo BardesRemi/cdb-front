@@ -11,14 +11,14 @@
             v-model="username"
             :rules="[rules.required, rules.max, rules.min]"
             :counter="24"
-            label="Username"
+            :label="$t('username')"
           ></v-text-field>
           <v-text-field
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min, rules.max]"
             :type="show1 ? 'text' : 'password'"
-            label="Password"
+            :label="$t('password')"
             hint="required"
             @click:append="show1 = !show1"
           ></v-text-field>
@@ -27,14 +27,14 @@
             :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.match]"
             :type="show2 ? 'text' : 'password'"
-            label="Confirm password"
+            :label="$t('confirmpassword')"
             hint="required and equal to password"
             @click:append="show2 = !show2"
           ></v-text-field>
         </v-container>
       </v-form>
       <v-card-actions>
-          <v-btn class="register-btn" :disabled="!valid" @click="register" color="success">Register</v-btn>
+          <v-btn class="register-btn" :disabled="!valid" @click="register" color="success">{{ $t("register") }}</v-btn>
       </v-card-actions>
     </v-card>
   </div>

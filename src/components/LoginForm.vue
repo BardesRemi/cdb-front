@@ -12,22 +12,22 @@
             v-model="username"
             :rules="[rules.required, rules.max]"
             :counter="24"
-            label="Username"
+            :label="$t('username')"
           ></v-text-field>
           <v-text-field
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required]"
             :type="show1 ? 'text' : 'password'"
-            label="Password"
+            :label="$t('password')"
             hint="required"
             @click:append="show1 = !show1"
           ></v-text-field>
         </v-container>
       </v-form>
       <v-card-actions >
-        <v-btn class="register-btn" @click="redirectRegister" color="warning">Register</v-btn>
-        <v-btn class="login-btn" :disabled="!valid" @click="submit" color="success">login</v-btn>
+        <v-btn class="register-btn" @click="redirectRegister" color="warning">{{ $t("register") }}</v-btn>
+        <v-btn class="login-btn" :disabled="!valid" @click="submit" color="success">{{ $t("login") }}</v-btn>
       </v-card-actions>
     </v-card>
   </div>
