@@ -80,9 +80,10 @@
 </template>
 
 <script>
-import axios from 'axios'
+
 import EditComputer from '../views/EditComputer.vue'
 import AddComputer from '../views/AddComputer.vue'
+import { axios } from '../api/index'
 import { computerService } from '../api/ComputerService'
 
 export default {
@@ -111,13 +112,13 @@ export default {
   mounted () {
     axios
       .get(
-        'http://10.0.1.248:8081/computer-database/computers?page=' + this.page
+        '/computers?page=' + this.page
       )
       .then((response) => (this.computers = response.data))
       .catch((error) => console.log(error))
     console.log(this.computers)
     axios
-      .get('http://10.0.1.248:8081/computer-database/computers/nb')
+      .get('/computers/nb')
       .then((response) => (this.nb_page = response.data.nb))
       .catch((error) => console.log(error))
   },
@@ -153,19 +154,19 @@ export default {
       if (this.presearch) {
         axios
           .get(
-            'http://10.0.1.248:8081/computer-database/computers?page=' +
+            '/computers?page=' +
               this.page
           )
           .then((response) => { this.computers = response.data })
           .catch((error) => { console.log(error) })
         axios
-          .get('http://10.0.1.248:8081/computer-database/computers/nb')
+          .get('/computers/nb')
           .then((response) => (this.nb_page = response.data.nb))
           .catch((error) => console.log(error))
       } else {
         axios
           .get(
-            'http://10.0.1.248:8081/computer-database/computers/search?page=' +
+            '/computers/search?page=' +
               this.page +
               '&name=' +
               this.search
@@ -187,14 +188,14 @@ export default {
       this.page = 1
       axios
         .get(
-          'http://10.0.1.248:8081/computer-database/computers/search?page=1&name=' +
+          '/computers/search?page=1&name=' +
             this.search
         )
         .then((response) => (this.computers = response.data))
         .catch((error) => console.log(error))
       axios
         .get(
-          'http://10.0.1.248:8081/computer-database/computers/nbsearch?name=' +
+          '/computers/nbsearch?name=' +
             this.search
         )
         .then((response) => (this.nb_page = response.data.nb))
