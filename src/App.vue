@@ -14,7 +14,7 @@
   }
 </style>
 
-<template>
+<template >
   <v-app :style="{'background': 'rgb(156,156,193);','background': 'linear-gradient(90deg, rgba(156,156,193,1) 8%, rgba(148,213,224,1) 51%, rgba(187,224,232,1) 89%)'}">>
         <v-navigation-drawer
       v-model="drawer"
@@ -45,7 +45,7 @@
             <v-list-item-title>Add Computer</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/login">
+        <v-list-item link to="/login" v-if="display">
           <v-list-item-action>
             <v-icon>mdi-account</v-icon>
           </v-list-item-action>
@@ -53,7 +53,7 @@
             <v-list-item-title>Login</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/register">
+        <v-list-item link to="/register" v-if="display">
           <v-list-item-action>
             <v-icon>mdi-account-edit</v-icon>
           </v-list-item-action>
@@ -88,8 +88,11 @@
 
     <v-main>
       <router-view/>
-      <div class="loginDis" :class="{hidden_login:!loginDisplay}">
+      <div class="loginDis" :class="{hidden_login:!loginDisplay}" v-if="display">
         <LoginForm/>
+      </div>
+      <div class="loginDis" :class="{hidden_login:!loginDisplay}" v-if="!display">
+        <Logout/>
       </div>
     </v-main>
   </v-app>
@@ -97,6 +100,9 @@
 
 <script>
 import LoginForm from './components/LoginForm.vue'
+import { axios } from '@/api'
+import { AUTH_LOGOUT } from '@/plugins/actions/auth'
+import Logout from '@/components/Logout'
 
 export default {
   name: 'App',
@@ -104,11 +110,28 @@ export default {
     source: String
   },
   components: {
+    Logout,
     LoginForm
   },
   data: () => ({
     drawer: null,
-    loginDisplay: false
-  })
+    loginDisplay: false,
+    display: true
+  }),
+  created: function () {
+    if (this.$store.getters.isAuthenticated) {
+      this.display = false
+    }
+    axios.interceptors.response.use(undefined, function (err) {
+      return new Promise(function (resolve, reject) {
+        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+          // if you ever get an unauthorized, logout the user
+          this.$store.dispatch(AUTH_LOGOUT)
+          // you can also redirect to /login if needed !
+        }
+        throw err
+      })
+    })
+  }
 }
 </script>
