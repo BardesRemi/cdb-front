@@ -126,7 +126,7 @@ export default {
       if (this.allSelected) {
         this.selected = []
       } else {
-        this.selected = new Array(this.computers.length).fill(0).map((val, index) => this.computers[index].id)
+        this.selected = this.computers.map(comp => comp.id)
       }
     },
     deleteSelected: function (selection) {
@@ -136,7 +136,7 @@ export default {
           error => { alert('Error when deleting computer : ' + error); this.update() }
         )
       } else {
-        this.update()
+        this.computers.length === this.selected.length ? this.previousPage() : this.update()
         alert('Selected computers have been deleted')
       }
     },
@@ -156,8 +156,8 @@ export default {
             'http://10.0.1.248:8081/computer-database/computers?page=' +
               this.page
           )
-          .then((response) => (this.computers = response.data))
-          .catch((error) => console.log(error))
+          .then((response) => { this.computers = response.data })
+          .catch((error) => { console.log(error) })
         axios
           .get('http://10.0.1.248:8081/computer-database/computers/nb')
           .then((response) => (this.nb_page = response.data.nb))
@@ -170,8 +170,8 @@ export default {
               '&name=' +
               this.search
           )
-          .then((response) => (this.computers = response.data))
-          .catch((error) => console.log(error))
+          .then((response) => { this.computers = response.data })
+          .catch((error) => { console.log(error) })
       }
     },
     previousPage: function () {
