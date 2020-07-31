@@ -5,7 +5,7 @@
     visibility: visible;
     position: fixed;
     z-index: 3;
-    top: 70px;
+    top: 72px;
     right: 10px;
   }
 
@@ -37,22 +37,6 @@
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/addComputer">
-          <v-list-item-action>
-            <v-icon>mdi-monitor-clean</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Add Computer</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link to="/login">
-          <v-list-item-action>
-            <v-icon>mdi-account</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Login</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
         <v-list-item link to="/register">
           <v-list-item-action>
             <v-icon>mdi-account-edit</v-icon>
@@ -81,8 +65,14 @@
         <b>CBD</b>
       </div>
       <v-spacer></v-spacer>
-      <v-btn icon class="loginButton" @click="loginDisplay = !loginDisplay">
+      <v-btn icon class="loginButton" @click="loginDisplay = !loginDisplay" v-if="loginDisplay">
         <v-icon>mdi-account</v-icon>
+      </v-btn>
+      <v-btn class="loginButton" @click="loginDisplay = !loginDisplay" v-if="loginDisplay">
+        Logout
+      </v-btn>
+      <v-btn class="loginButton" @click="loginDisplay = !loginDisplay" v-if="!loginDisplay">
+        Login
       </v-btn>
     </v-app-bar>
 
