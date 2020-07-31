@@ -16,7 +16,7 @@
           <v-text-field
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min, rules.max]"
+            :rules="[rules.required, rules.min, rules.max, rules.match]"
             :type="show1 ? 'text' : 'password'"
             :label="$t('password')"
             hint="required"
@@ -59,7 +59,7 @@ export default {
         required: v => !!v || 'Required',
         max: v => v.length <= 24 || 'Must be less than 25 characters',
         min: v => v.length > 5 || 'Must be at least 6 characters',
-        match: v => (!!v && v) === this.password || 'Passwords do not match'
+        match: v => (!!v && v) === this.password2 || 'Passwords do not match'
       }
     }
   },
@@ -69,12 +69,21 @@ export default {
       if (this.$refs.form.validate()) {
         console.log('bonjour')
       }
+    },
+
+    validateField () {
+      this.$refs.form.validate()
     }
   },
 
   computed: {
 
+  },
+
+  watch: {
+    password2: 'validateField'
   }
+
 }
 </script>
 
