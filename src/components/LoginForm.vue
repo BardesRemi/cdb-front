@@ -6,7 +6,7 @@
       hover
       shaped
     >
-      <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form class="login" ref="form" v-model="valid" lazy-validation>
         <v-container>
           <v-text-field
             v-model="username"
@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import { AUTH_REQUEST } from '@/plugins/actions/auth'
+
 export default {
   name: 'LoginForm',
   props: {
@@ -56,9 +58,16 @@ export default {
   methods: {
     submit () {
       this.$refs.form.validate()
+      this.login()
     },
     redirectRegister () {
       this.$router.push({ name: 'Register' })
+    },
+    login () {
+      const { username, password } = this
+      this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
+        this.$router.push('/')
+      })
     }
   },
 
