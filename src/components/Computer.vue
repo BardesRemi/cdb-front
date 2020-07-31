@@ -30,6 +30,12 @@
         <template v-slot:default>
           <thead>
             <tr>
+              <th class="text-left">
+                <v-row>
+                  <v-checkbox :input-value="allSelected" @change="selectAll"></v-checkbox>
+                  <v-icon v-if="selected.length > 0" @click="deleteSelected(selected)">delete</v-icon>
+                </v-row>
+              </th>
               <th class="text-left">Name</th>
               <th class="text-left">Introduced</th>
               <th class="text-left">Discontinued</th>
@@ -38,19 +44,20 @@
           </thead>
           <tbody>
             <tr v-for="(computer) in computers" :key="computer.id">
+              <td><v-row><v-checkbox v-model="selected" :value="computer.id"></v-checkbox></v-row></td>
+
               <v-dialog v-model="dialog[computer.id]">
                 <template v-slot:activator="{ on }">
-                  <td v-on="on">{{computer.name}}</td>
-
                   <td v-on="on" v-if="computer.companyDTO !== null">{{computer.companyDTO.name}}</td>
                   <td v-on="on" v-else></td>
                   <td v-on="on" v-if="computer.discontinued !== null">{{computer.discontinued}}</td>
                   <td v-on="on" v-else></td>
                   <td v-on="on" v-if="computer.introduced !== null">{{computer.introduced}}</td>
                   <td v-on="on" v-else></td>
+                  <td v-on="on">{{computer.name}}</td>
                 </template>
                 <v-card>
-                  <v-card-title class="headline grey lighten-2 justify-center"  >EditComputer</v-card-title>
+                  <v-card-title class="headline grey lighten-2 justify-center">EditComputer</v-card-title>
                   <v-card-text>
                     <EditComputer :id="parseInt(computer.id)" @exit="closeEditPopup(computer.id)"></EditComputer>
                   </v-card-text>
@@ -62,7 +69,7 @@
       </v-simple-table>
       <v-col>
         <v-pagination
-          :length="parseInt(nb_page/10,10)+1"
+          :length="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
           v-model="page"
           @input="update"
           :total-visible="7"
@@ -77,10 +84,13 @@
 import EditComputer from '../views/EditComputer.vue'
 import AddComputer from '../views/AddComputer.vue'
 import { axios } from '../api/index'
+import { computerService } from '../api/ComputerService'
+
 export default {
   name: 'Computer',
   data () {
     return {
+      selected: [],
       addComputerDialog: false,
       dialog: {},
       on: true,
@@ -91,6 +101,9 @@ export default {
       search: '',
       presearch: true
     }
+  },
+  computed: {
+    allSelected () { return this.computers.length === this.selected.length && this.selected.length > 0 }
   },
   components: {
     EditComputer,
@@ -110,6 +123,24 @@ export default {
       .catch((error) => console.log(error))
   },
   methods: {
+    selectAll: function () {
+      if (this.allSelected) {
+        this.selected = []
+      } else {
+        this.selected = this.computers.map(comp => comp.id)
+      }
+    },
+    deleteSelected: function (selection) {
+      if (selection.length > 0) {
+        computerService.delete(selection[0]).then(
+          result => this.deleteSelected(selection.slice(1)),
+          error => { alert('Error when deleting computer : ' + error); this.update() }
+        )
+      } else {
+        this.computers.length === this.selected.length ? this.previousPage() : this.update()
+        alert('Selected computers have been deleted')
+      }
+    },
     closeAddPopup: function () {
       this.update()
       this.addComputerDialog = false
@@ -119,14 +150,15 @@ export default {
       this.$set(this.dialog, id, false)
     },
     update: function () {
+      this.selected = []
       if (this.presearch) {
         axios
           .get(
             '/computers?page=' +
               this.page
           )
-          .then((response) => (this.computers = response.data))
-          .catch((error) => console.log(error))
+          .then((response) => { this.computers = response.data })
+          .catch((error) => { console.log(error) })
         axios
           .get('/computers/nb')
           .then((response) => (this.nb_page = response.data.nb))
@@ -139,8 +171,8 @@ export default {
               '&name=' +
               this.search
           )
-          .then((response) => (this.computers = response.data))
-          .catch((error) => console.log(error))
+          .then((response) => { this.computers = response.data })
+          .catch((error) => { console.log(error) })
       }
     },
     previousPage: function () {
@@ -152,6 +184,7 @@ export default {
       this.update()
     },
     searcher: function () {
+      this.selected = []
       this.page = 1
       axios
         .get(
@@ -183,6 +216,15 @@ th {
   color: white;
   cursor: pointer;
 
+}
+
+.table {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.deleteIcon {
+  float: right;
 }
 
 </style>
