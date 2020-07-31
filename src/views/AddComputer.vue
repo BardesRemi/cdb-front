@@ -15,11 +15,17 @@ export default {
     return {
       computer: new Computer(0, ''),
       submitFunction (computer) {
+        function eventReturn (success, message) {
+          return {
+            success: success,
+            message: message
+          }
+        }
         const newComputer = { ...computer, id: undefined }
         computerService.create(newComputer).then(
-          result => this.$emit('exit', this.eventReturn(true, 'Computer successfully added to database')),
+          result => this.$emit('exit', eventReturn(true, 'Computer successfully added to database')),
           error => {
-            this.$emit('exit', this.eventReturn(false, 'Error while trying to add the computer'))
+            this.$emit('exit', eventReturn(false, 'Error while trying to add the computer'))
             console.log(error)
           })
       }
@@ -31,12 +37,6 @@ export default {
   methods: {
     resendEvent: function (state) {
       this.$emit('exit', state)
-    },
-    eventReturn (success, message) {
-      return {
-        success: success,
-        message: message
-      }
     }
   }
 }

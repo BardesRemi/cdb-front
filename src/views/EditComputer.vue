@@ -18,10 +18,16 @@ export default {
     return {
       computer: new Computer(0, ''),
       submitFunction (computer) {
+        function eventReturn (success, message) {
+          return {
+            success: success,
+            message: message
+          }
+        }
         computerService.edit(computer).then(
-          result => this.$emit('exit', this.eventReturn(true, 'Computer successfully updated')),
+          result => this.$emit('exit', eventReturn(true, 'Computer successfully updated')),
           error => {
-            this.$emit('exit', this.eventReturn(false, 'Error while trying to update the computer'))
+            this.$emit('exit', eventReturn(false, 'Error while trying to update the computer'))
             console.log(error)
           })
       }
@@ -33,12 +39,6 @@ export default {
   methods: {
     resendEvent: function (state) {
       this.$emit('exit', state)
-    },
-    eventReturn (success, message) {
-      return {
-        success: success,
-        message: message
-      }
     }
   },
   mounted () {

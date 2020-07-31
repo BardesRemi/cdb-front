@@ -3,7 +3,7 @@
     <div class="computer">
       <Computer @errorMessage="printErrorMessage($event)" @infoMessage="printInfoMessage($event)" @successMessage="printSuccessMessage($event)"/>
     </div>
-    <v-snackbar v-model="messageVisible" :timeout="timeout" :color="color">
+    <v-snackbar v-model="messageVisible" :timeout="timeout" :color="color" top>
       {{ message }}
       <template v-slot:action="{ attrs }">
         <v-btn text v-bind="attrs" @click="messageVisible = false">
@@ -31,6 +31,8 @@ export default {
     printMessage (message, color) {
       this.color = color
       this.message = message
+      this.messageVisible = true
+      this.resetSnackbar()
     },
     printErrorMessage (message) {
       this.printMessage(message, 'error')
@@ -40,6 +42,9 @@ export default {
     },
     printSuccessMessage (message) {
       this.printMessage(message, 'success')
+    },
+    resetSnackbar () {
+      this.timeout = this.timeout === 6000 ? 6001 : 6000 // Le timeout doit être modifié pour le relancer
     }
   }
 }
