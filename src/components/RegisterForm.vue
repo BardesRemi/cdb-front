@@ -90,9 +90,9 @@ export default {
 <style scoped>
   .registerForm {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%,-40%);
     z-index: 2;
     margin-left:10px;
   }
