@@ -18,7 +18,7 @@
                 <v-card>
                   <v-card-title class="headline grey lighten-2 justify-center">Add new computer</v-card-title>
                   <v-card-text>
-                    <AddComputer @exit="closeAddPopup()"></AddComputer>
+                    <AddComputer @exit="closeAddPopup($event)"></AddComputer>
                   </v-card-text>
                 </v-card>
               </v-dialog>
@@ -59,7 +59,7 @@
                 <v-card>
                   <v-card-title class="headline grey lighten-2 justify-center">EditComputer</v-card-title>
                   <v-card-text>
-                    <EditComputer :id="parseInt(computer.id)" @exit="closeEditPopup(computer.id)"></EditComputer>
+                    <EditComputer :id="parseInt(computer.id)" @exit="closeEditPopup($event, computer.id)"></EditComputer>
                   </v-card-text>
                 </v-card>
               </v-dialog>
@@ -115,7 +115,6 @@ export default {
       )
       .then((response) => (this.computers = response.data))
       .catch((error) => console.log(error))
-    console.log(this.computers)
     axios
       .get('http://10.0.1.248:8081/computer-database/computers/nb')
       .then((response) => (this.nb_page = response.data.nb))
@@ -140,11 +139,13 @@ export default {
         alert('Selected computers have been deleted')
       }
     },
-    closeAddPopup: function () {
+    closeAddPopup: function (eventReturn) {
+      this.$emit(eventReturn.success ? 'successMessage' : 'errorMessage', eventReturn.message)
       this.update()
       this.addComputerDialog = false
     },
-    closeEditPopup: function (id) {
+    closeEditPopup: function (eventReturn, id) {
+      this.$emit(eventReturn.success ? 'successMessage' : 'errorMessage', eventReturn.message)
       this.update()
       this.$set(this.dialog, id, false)
     },

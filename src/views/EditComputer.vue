@@ -1,6 +1,6 @@
 <template>
   <div class="editComputer">
-    <ComputerInputForm :computer="computer" :submitFunction="submitFunction" @exit="resendEvent()"></ComputerInputForm>
+    <ComputerInputForm :computer="computer" :submitFunction="submitFunction" @exit="resendEvent($event)"></ComputerInputForm>
   </div>
 </template>
 
@@ -18,10 +18,12 @@ export default {
     return {
       computer: new Computer(0, ''),
       submitFunction (computer) {
-        computerService.edit(computer).then(result => this.$emit('exit'), error => {
-          alert('Network error while trying to update the computer')
-          console.log(error)
-        })
+        computerService.edit(computer).then(
+          result => this.$emit('exit', this.eventReturn(true, 'Computer successfully updated')),
+          error => {
+            this.$emit('exit', this.eventReturn(false, 'Error while trying to update the computer'))
+            console.log(error)
+          })
       }
     }
   },
@@ -29,8 +31,14 @@ export default {
     ComputerInputForm
   },
   methods: {
-    resendEvent: function () {
-      this.$emit('exit')
+    resendEvent: function (state) {
+      this.$emit('exit', state)
+    },
+    eventReturn (success, message) {
+      return {
+        success: success,
+        message: message
+      }
     }
   },
   mounted () {
