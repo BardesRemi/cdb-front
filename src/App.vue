@@ -80,7 +80,18 @@
         />
         <b>CBD</b>
       </div>
-      <v-spacer></v-spacer>
+      <v-spacer> </v-spacer>
+    <div >
+      <select v-model="$i18n.locale">
+        <option
+          v-for="(lang, i) in languageArray"
+          :key="`lang${i}`"
+          :value="lang"
+        >
+          {{ lang }}
+        </option>
+      </select>
+    </div>
       <v-btn icon class="loginButton" @click="loginDisplay = !loginDisplay">
         <v-icon>mdi-account</v-icon>
       </v-btn>
@@ -108,7 +119,8 @@ export default {
   },
   data: () => ({
     drawer: null,
-    loginDisplay: false
+    loginDisplay: false,
+    languageArray: ['en', 'fr']
   })
 }
 </script>
