@@ -5,7 +5,7 @@
     visibility: visible;
     position: fixed;
     z-index: 3;
-    top: 70px;
+    top: 72px;
     right: 10px;
   }
 
@@ -65,8 +65,14 @@
         <b>CBD</b>
       </div>
       <v-spacer></v-spacer>
-      <v-btn icon class="loginButton" @click="loginDisplay = !loginDisplay">
+      <v-btn icon class="loginButton" @click="loginDisplay = !loginDisplay" v-if="loginDisplay">
         <v-icon>mdi-account</v-icon>
+      </v-btn>
+      <v-btn class="loginButton" @click="loginDisplay = !loginDisplay" v-if="loginDisplay">
+        Logout
+      </v-btn>
+      <v-btn class="loginButton" @click="loginDisplay = !loginDisplay" v-if="!loginDisplay">
+        Login
       </v-btn>
     </v-app-bar>
 
