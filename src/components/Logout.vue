@@ -1,6 +1,6 @@
 <template>
   <div class="logout">
-    <v-btn @click="logout">LOGOUT</v-btn>
+    <v-btn  @click="logout">LOGOUT</v-btn>
   </div>
 </template>
 
@@ -11,9 +11,10 @@ export default {
   name: 'Logout',
   methods: {
     logout: function () {
+      this.$emit('exit')
       this.$store.dispatch(AUTH_LOGOUT)
         .then(() => {
-          this.$router.push('/login')
+          this.$router.push('/')
         })
     }
   }

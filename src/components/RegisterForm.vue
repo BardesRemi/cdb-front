@@ -8,13 +8,13 @@
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-container>
           <v-text-field
-            v-model="username"
+            v-model="user.username"
             :rules="[rules.required, rules.max, rules.min]"
             :counter="24"
             label="Username"
           ></v-text-field>
           <v-text-field
-            v-model="password"
+            v-model="user.password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min, rules.max, rules.match]"
             :type="show1 ? 'text' : 'password'"
@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import { userService } from '@/api/UserService'
+
 export default {
   name: 'RegisterForm',
 
@@ -50,8 +52,10 @@ export default {
   data () {
     return {
       valid: false,
-      username: '',
-      password: '',
+      user: {
+        username: '',
+        password: ''
+      },
       password2: '',
       show1: false,
       show2: false,
@@ -67,12 +71,18 @@ export default {
   methods: {
     register () {
       if (this.$refs.form.validate()) {
-        console.log('bonjour')
+        this.createUser()
       }
     },
 
     validateField () {
       this.$refs.form.validate()
+    },
+
+    createUser () {
+      const user = { ...this.user }
+      userService.create(user)
+      this.$router.push('/')
     }
   },
 

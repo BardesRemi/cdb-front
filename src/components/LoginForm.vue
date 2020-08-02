@@ -66,9 +66,11 @@ export default {
     login () {
       const { username, password } = this
       this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
+        this.$emit('exit')
         this.$router.push('/')
       })
     }
+
   },
 
   computed: {

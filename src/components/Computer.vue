@@ -116,7 +116,6 @@ export default {
       )
       .then((response) => (this.computers = response.data))
       .catch((error) => console.log(error))
-    console.log(this.computers)
     axios
       .get('/computers/nb')
       .then((response) => (this.nb_page = response.data.nb))

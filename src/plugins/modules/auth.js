@@ -22,8 +22,7 @@ const actions = {
   [AUTH_REQUEST]: ({ commit, dispatch }, user) => {
     return new Promise((resolve, reject) => {
       commit(AUTH_REQUEST)
-      console.log(user)
-      Axios.post('http://10.0.1.248:8080/computer-database/authenticate', user)
+      Axios.post('http://10.188.20.129:8080/computer-database/authenticate', user)
         .then(resp => {
           const token = resp.data.token
           localStorage.setItem('user-token', token)

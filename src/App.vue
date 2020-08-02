@@ -29,28 +29,12 @@
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/dashboard">
+        <v-list-item link to="/dashboard" v-if="!display">
           <v-list-item-action>
             <v-icon>mdi-antenna</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Dashboard</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link to="/addComputer">
-          <v-list-item-action>
-            <v-icon>mdi-monitor-clean</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Add Computer</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link to="/login" v-if="display">
-          <v-list-item-action>
-            <v-icon>mdi-account</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Login</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item link to="/register" v-if="display">
@@ -89,10 +73,10 @@
     <v-main>
       <router-view/>
       <div class="loginDis" :class="{hidden_login:!loginDisplay}" v-if="display">
-        <LoginForm/>
+        <LoginForm @exit="handleVisibility()"/>
       </div>
       <div class="loginDis" :class="{hidden_login:!loginDisplay}" v-if="!display">
-        <Logout/>
+        <Logout  @exit="handleVisibility()"/>
       </div>
     </v-main>
   </v-app>
@@ -100,8 +84,6 @@
 
 <script>
 import LoginForm from './components/LoginForm.vue'
-import { axios } from '@/api'
-import { AUTH_LOGOUT } from '@/plugins/actions/auth'
 import Logout from '@/components/Logout'
 
 export default {
@@ -121,17 +103,14 @@ export default {
   created: function () {
     if (this.$store.getters.isAuthenticated) {
       this.display = false
+      this.$forceUpdate()
     }
-    axios.interceptors.response.use(undefined, function (err) {
-      return new Promise(function (resolve, reject) {
-        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-          // if you ever get an unauthorized, logout the user
-          this.$store.dispatch(AUTH_LOGOUT)
-          // you can also redirect to /login if needed !
-        }
-        throw err
-      })
-    })
+  },
+  methods: {
+    handleVisibility: function () {
+      this.display = !this.display
+    }
   }
+
 }
 </script>

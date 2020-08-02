@@ -13,7 +13,7 @@ const getters = {
 const actions = {
   [USER_REQUEST]: ({ commit, dispatch }, user) => {
     commit(USER_REQUEST)
-    Axios.get('http://10.0.1.248:8080/computer-database/user/login?username=' + user.username + '&password=' + user.password)
+    Axios.get('http://10.188.20.129:8080/computer-database/user/login?username=' + user.username + '&password=' + user.password)
       .then(resp => {
         commit(USER_SUCCESS, resp)
       })

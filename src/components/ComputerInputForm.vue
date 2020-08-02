@@ -49,8 +49,6 @@
 import { Computer } from '../model/Computer'
 import { companyService } from '../api/CompanyService'
 
-console.log(companyService)
-
 export default {
   name: 'ComputerInputForm',
   data () {
@@ -67,7 +65,6 @@ export default {
   methods: {
     submit (event) {
       event.preventDefault()
-      console.log('Submit du computer')
       this.submitFunction(this.computer)
     },
     resetDiscontinuedDate () { if (!this.computer.introduced) { this.computer.discontinued = undefined } } // Reset the discontinued date if no introduction date is set
