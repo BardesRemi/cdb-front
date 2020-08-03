@@ -35,13 +35,13 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: () => import(/* webpackChunkName: "about" */ '../views/Dashboard.vue'),
-    beforeEnter: ifAuthenticated
+    beforeRouteEnter: ifAuthenticated
   },
   {
     path: '/register',
     name: 'Register',
     component: () => import(/* webpackChunkName: "login" */'../views/Register.vue'),
-    beforeEnter: ifNotAuthenticated
+    beforeRouteEnter: ifNotAuthenticated
   }
 ]
 
