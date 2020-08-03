@@ -36,10 +36,42 @@
                   <v-icon v-if="selected.length > 0" @click="deleteSelected(selected)">delete</v-icon>
                 </v-row>
               </th>
-              <th class="text-left">Name</th>
-              <th class="text-left">Introduced</th>
-              <th class="text-left">Discontinued</th>
-              <th class="text-left">Company Name</th>
+              <th class="text-left">
+                <v-row>
+                  Name
+                  <div class="orderByIcons">
+                  <v-icon @click="setOrderBy('name', true)">arrow_upward</v-icon>
+                  <v-icon @click="setOrderBy('name', false)">arrow_downward</v-icon>
+                  </div>
+                </v-row>
+              </th>
+              <th class="text-left">
+                <v-row>
+                  Introduced
+                  <div class="orderByIcons">
+                  <v-icon @click="setOrderBy('introduced', true)">arrow_upward</v-icon>
+                  <v-icon @click="setOrderBy('introduced', false)">arrow_downward</v-icon>
+                  </div>
+                </v-row>
+              </th>
+              <th class="text-left">
+                <v-row>
+                  Discontinued
+                  <div class="orderByIcons">
+                  <v-icon @click="setOrderBy('discontinued', true)">arrow_upward</v-icon>
+                  <v-icon @click="setOrderBy('discontinued', false)">arrow_downward</v-icon>
+                  </div>
+                </v-row>
+              </th>
+              <th class="text-left">
+                <v-row>
+                  Company Name
+                  <div class="orderByIcons">
+                  <v-icon @click="setOrderBy('companyName', true)">arrow_upward</v-icon>
+                  <v-icon @click="setOrderBy('companyName', false)">arrow_downward</v-icon>
+                  </div>
+                </v-row>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -99,7 +131,9 @@ export default {
       page: 1,
       computers: [],
       search: '',
-      presearch: true
+      presearch: true,
+      orderByColumn: '',
+      ascendent: true
     }
   },
   computed: {
@@ -114,6 +148,11 @@ export default {
     this.update()
   },
   methods: {
+    setOrderBy (column, ascendent) {
+      this.orderByColumn = column
+      this.ascendent = ascendent
+      this.update()
+    },
     selectAll: function () {
       if (this.allSelected) {
         this.selected = []
@@ -144,29 +183,27 @@ export default {
     },
     update: function () {
       this.selected = []
-      if (this.presearch) {
-        axios
+      axios
+        .get(
+          '/computers?page=' + this.page +
+              '&search=' + this.search +
+              '&by=' + this.orderByColumn +
+              '&order=' + (this.ascendent ? 'ASC' : 'DESC')
+        )
+        .then((response) => { this.computers = response.data })
+        .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
+      this.search
+        ? axios
           .get(
-            '/computers?page=' +
-              this.page
+            '/computers/nbsearch?name=' +
+            this.search
           )
-          .then((response) => { this.computers = response.data })
+          .then((response) => (this.nb_page = response.data.nb))
           .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
-        axios
+        : axios
           .get('/computers/nb')
           .then((response) => (this.nb_page = response.data.nb))
           .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
-      } else {
-        axios
-          .get(
-            '/computers/search?page=' +
-              this.page +
-              '&name=' +
-              this.search
-          )
-          .then((response) => { this.computers = response.data })
-          .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
-      }
     },
     previousPage: function () {
       this.page -= 1
@@ -179,21 +216,7 @@ export default {
     searcher: function () {
       this.selected = []
       this.page = 1
-      axios
-        .get(
-          '/computers/search?page=1&name=' +
-            this.search
-        )
-        .then((response) => (this.computers = response.data))
-        .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
-      axios
-        .get(
-          '/computers/nbsearch?name=' +
-            this.search
-        )
-        .then((response) => (this.nb_page = response.data.nb))
-        .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
-      this.presearch = false
+      this.update()
     }
   }
 }
@@ -218,6 +241,10 @@ th {
 
 .deleteIcon {
   float: right;
+}
+
+.orderByIcons {
+  margin-left: 10px;
 }
 
 </style>
