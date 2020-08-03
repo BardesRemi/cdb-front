@@ -67,14 +67,28 @@
           </tbody>
         </template>
       </v-simple-table>
-      <v-col>
-        <v-pagination
-          :length="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
-          v-model="page"
-          @input="update"
-          :total-visible="7"
-        ></v-pagination>
-      </v-col>
+      <v-row justify="center" align="center">
+        <v-col cols="4" justify="space-around">
+          <v-slider
+            v-model="page"
+            color="orange"
+            class="pageSelectionSlider"
+            thumb-label
+            :max="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
+            min="1"
+            label="page"
+            @end="changePage">
+          </v-slider>
+        </v-col>
+        <v-col cols="4"  md="6">
+          <v-pagination
+            :length="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
+            v-model="page"
+            @input="update"
+            :total-visible="7"
+          ></v-pagination>
+        </v-col>
+      </v-row>
     </div>
   </v-row>
 </template>
@@ -172,6 +186,9 @@ export default {
       this.page -= 1
       this.update()
     },
+    changePage: function () {
+      this.update()
+    },
     nextPage: function () {
       this.page += 1
       this.update()
@@ -218,6 +235,10 @@ th {
 
 .deleteIcon {
   float: right;
+}
+
+.pageSelectionSlider {
+  width: 100px;
 }
 
 </style>
