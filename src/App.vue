@@ -12,6 +12,12 @@
   .loginDis.hidden_login {
     visibility: hidden;
   }
+  .fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>
 
 <template>
@@ -83,13 +89,8 @@
       <v-spacer> </v-spacer>
     <div >
       <select v-model="$i18n.locale">
-        <option
-          v-for="(lang, i) in languageArray"
-          :key="`lang${i}`"
-          :value="lang"
-        >
-          {{ lang }}
-        </option>
+        <option >en</option>
+        <option >fr</option>
       </select>
     </div>
       <v-btn icon class="loginButton" @click="loginDisplay = !loginDisplay">
@@ -99,9 +100,11 @@
 
     <v-main>
       <router-view/>
-      <div class="loginDis" :class="{hidden_login:!loginDisplay}">
-        <LoginForm/>
-      </div>
+        <transition name="fade">
+          <div class="loginDis" :class="{hidden_login:!loginDisplay}">
+            <LoginForm/>
+          </div>
+      </transition>
     </v-main>
   </v-app>
 </template>
