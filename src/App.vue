@@ -39,7 +39,7 @@
             <v-icon>mdi-account-edit</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Register</v-list-item-title>
+            <v-list-item-title>{{$t("register")}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -62,6 +62,12 @@
         <b>CBD</b>
       </div>
       <v-spacer></v-spacer>
+      <div>
+        <select v-model="$i18n.locale">
+            <option><div>en</div></option>
+            <option>fr</option>
+        </select>
+      </div>
       <v-btn icon class="profilButton" @click="profileStatus = !profileStatus" v-if="loggedIn">
         <v-icon>mdi-account</v-icon>
       </v-btn>
@@ -69,7 +75,7 @@
         <Logout  @logout="logout()"/>
       </div>
       <v-btn class="loginButton" @click="handleVisibility()" v-if="loginButtonDisplay">
-        Login
+        {{$t("login")}}
       </v-btn>
     </v-app-bar>
 
@@ -110,6 +116,7 @@ export default {
     profileStatus: false,
     loggedIn: false,
     username: localStorage.getItem('username')
+
   }),
   created: function () {
     if (this.$store.getters.isAuthenticated) {
