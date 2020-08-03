@@ -26,6 +26,7 @@
         </v-container>
       </v-form>
       <v-card-actions >
+        <v-btn class="cancel-btn" @click="exit" color="error">Cancel</v-btn>
         <v-btn class="register-btn" @click="redirectRegister" color="warning">Register</v-btn>
         <v-btn class="login-btn" :disabled="!valid" @click="submit" color="success">login</v-btn>
       </v-card-actions>
@@ -61,13 +62,20 @@ export default {
       this.login()
     },
     redirectRegister () {
+      this.$emit('redirectregister')
       this.$router.push({ name: 'Register' })
+    },
+    exit () {
+      this.$emit('exit')
     },
     login () {
       const { username, password } = this
       this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
-        this.$emit('exit')
+        this.$emit('connect', true)
+        this.$emit('update:username', username)
         this.$router.push('/')
+      }).catch(() => {
+        this.$emit('connect', false)
       })
     }
 
