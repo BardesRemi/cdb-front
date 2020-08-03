@@ -1,8 +1,16 @@
 <template>
   <div class="dashboard">
     <div class="computer">
-      <Computer/>
+      <Computer @errorMessage="printErrorMessage($event)" @infoMessage="printInfoMessage($event)" @successMessage="printSuccessMessage($event)"/>
     </div>
+    <v-snackbar v-model="messageVisible" :timeout="timeout" :color="color" top>
+      {{ message }}
+      <template v-slot:action="{ attrs }">
+        <v-btn text v-bind="attrs" @click="messageVisible = false">
+          X
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -10,7 +18,35 @@
 import Computer from '../components/Computer'
 export default {
   name: 'Dashboard',
-  components: { Computer }
+  components: { Computer },
+  data () {
+    return {
+      message: '',
+      timeout: 6000,
+      color: 'info',
+      messageVisible: false
+    }
+  },
+  methods: {
+    printMessage (message, color) {
+      this.color = color
+      this.message = message
+      this.messageVisible = true
+      this.resetSnackbar()
+    },
+    printErrorMessage (message) {
+      this.printMessage(message, 'error')
+    },
+    printInfoMessage (message) {
+      this.printMessage(message, 'info')
+    },
+    printSuccessMessage (message) {
+      this.printMessage(message, 'success')
+    },
+    resetSnackbar () {
+      this.timeout = this.timeout === 6000 ? 6001 : 6000 // Le timeout doit être modifié pour le relancer
+    }
+  }
 }
 </script>
 

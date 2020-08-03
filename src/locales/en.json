@@ -17,7 +17,8 @@
   "register" : "register",
   "login" : "login",
   "username" : "Username",
-  "confirmpassword" : "Confirmation du mot de passe"
+  "confirmpassword" : "Confirmation du mot de passe",
+  "logout" : "Logout"
 
 
 

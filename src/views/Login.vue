@@ -1,11 +1,11 @@
 <template>
   <div class="login">
-    <LoginForm/>
+    <LoginForm @exit="resendEvent()" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+
 import LoginForm from '@/components/LoginForm.vue'
 
 export default {
@@ -16,6 +16,9 @@ export default {
   methods: {
     redirectRegister () {
       this.$router.push({ name: 'Register' })
+    },
+    resendEvent: function () {
+      this.$emit('exit')
     }
   }
 }

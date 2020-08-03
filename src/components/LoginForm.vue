@@ -6,7 +6,7 @@
       hover
       shaped
     >
-      <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form class="login" ref="form" v-model="valid" lazy-validation>
         <v-container>
           <v-text-field
             v-model="username"
@@ -26,14 +26,17 @@
         </v-container>
       </v-form>
       <v-card-actions >
+        <v-btn class="cancel-btn" @click="exit" color="error">{{$t("cancel")}}</v-btn>
         <v-btn class="register-btn" @click="redirectRegister" color="warning">{{ $t("register") }}</v-btn>
-        <v-btn class="login-btn" :disabled="!valid" @click="submit" color="success">{{ $t("login") }}</v-btn>
+        <v-btn class="login-btn" :disabled="!valid" @click="submit" color="success"> {{ $t("login") }}</v-btn>
       </v-card-actions>
     </v-card>
   </div>
 </template>
 
 <script>
+import { AUTH_REQUEST } from '@/plugins/actions/auth'
+
 export default {
   name: 'LoginForm',
   props: {
@@ -56,10 +59,26 @@ export default {
   methods: {
     submit () {
       this.$refs.form.validate()
+      this.login()
     },
     redirectRegister () {
+      this.$emit('redirectregister')
       this.$router.push({ name: 'Register' })
+    },
+    exit () {
+      this.$emit('exit')
+    },
+    login () {
+      const { username, password } = this
+      this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
+        this.$emit('connect', true)
+        this.$emit('update:username', username)
+        this.$router.push('/dashboard')
+      }).catch(() => {
+        this.$emit('connect', false)
+      })
     }
+
   },
 
   computed: {

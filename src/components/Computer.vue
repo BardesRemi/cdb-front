@@ -18,7 +18,7 @@
                 <v-card>
                   <v-card-title class="headline grey lighten-2 justify-center">{{ $t("addComputer") }}</v-card-title>
                   <v-card-text>
-                    <AddComputer @exit="closeAddPopup()"></AddComputer>
+                    <AddComputer @exit="closeAddPopup($event)"></AddComputer>
                   </v-card-text>
                 </v-card>
               </v-dialog>
@@ -30,6 +30,12 @@
         <template v-slot:default>
           <thead>
             <tr>
+              <th class="text-left">
+                <v-row>
+                  <v-checkbox :input-value="allSelected" @change="selectAll"></v-checkbox>
+                  <v-icon v-if="selected.length > 0" @click="deleteSelected(selected)">delete</v-icon>
+                </v-row>
+              </th>
               <th class="text-left">{{ $t("name") }}</th>
               <th class="text-left">{{ $t("introduced") }}</th>
               <th class="text-left">{{ $t("discontinued") }}</th>
@@ -38,21 +44,22 @@
           </thead>
           <tbody>
             <tr v-for="(computer) in computers" :key="computer.id">
+              <td><v-row><v-checkbox v-model="selected" :value="computer.id"></v-checkbox></v-row></td>
+
               <v-dialog v-model="dialog[computer.id]">
                 <template v-slot:activator="{ on }">
-                  <td v-on="on">{{computer.name}}</td>
-
                   <td v-on="on" v-if="computer.companyDTO !== null">{{computer.companyDTO.name}}</td>
                   <td v-on="on" v-else></td>
                   <td v-on="on" v-if="computer.discontinued !== null">{{computer.discontinued}}</td>
                   <td v-on="on" v-else></td>
                   <td v-on="on" v-if="computer.introduced !== null">{{computer.introduced}}</td>
                   <td v-on="on" v-else></td>
+                  <td v-on="on">{{computer.name}}</td>
                 </template>
                 <v-card>
                   <v-card-title class="headline grey lighten-2 justify-center"  >{{ $t("editComputer") }}</v-card-title>
                   <v-card-text>
-                    <EditComputer :id="parseInt(computer.id)" @exit="closeEditPopup(computer.id)"></EditComputer>
+                    <EditComputer :id="parseInt(computer.id)" @exit="closeEditPopup($event, computer.id)"></EditComputer>
                   </v-card-text>
                 </v-card>
               </v-dialog>
@@ -62,7 +69,7 @@
       </v-simple-table>
       <v-col>
         <v-pagination
-          :length="parseInt(nb_page/10,10)+1"
+          :length="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
           v-model="page"
           @input="update"
           :total-visible="7"
@@ -73,14 +80,17 @@
 </template>
 
 <script>
-import axios from 'axios'
+
 import EditComputer from '../views/EditComputer.vue'
 import AddComputer from '../views/AddComputer.vue'
+import { axios } from '../api/index'
+import { computerService } from '../api/ComputerService'
 
 export default {
   name: 'Computer',
   data () {
     return {
+      selected: [],
       addComputerDialog: false,
       dialog: {},
       on: true,
@@ -92,55 +102,70 @@ export default {
       presearch: true
     }
   },
+  computed: {
+    allSelected () { return this.computers.length === this.selected.length && this.selected.length > 0 }
+  },
   components: {
     EditComputer,
     AddComputer
   },
   mounted () {
-    axios
-      .get(
-        'http://10.0.1.248:8081/computer-database/computers?page=' + this.page
-      )
-      .then((response) => (this.computers = response.data))
-      .catch((error) => console.log(error))
-    console.log(this.computers)
-    axios
-      .get('http://10.0.1.248:8081/computer-database/computers/nb')
-      .then((response) => (this.nb_page = response.data.nb))
-      .catch((error) => console.log(error))
+    axios.defaults.headers.Authorization = 'Bearer ' + localStorage.getItem('user-token')
+    this.update()
   },
   methods: {
-    closeAddPopup: function () {
+    selectAll: function () {
+      if (this.allSelected) {
+        this.selected = []
+      } else {
+        this.selected = this.computers.map(comp => comp.id)
+      }
+    },
+    deleteSelected: function (selection) {
+      if (selection.length > 0) {
+        computerService.delete(selection[0]).then(
+          result => this.deleteSelected(selection.slice(1)),
+          error => { this.$emit('errorMessage', 'Error when deleting computer'); console.error(error); this.update() }
+        )
+      } else {
+        this.computers.length === this.selected.length ? this.previousPage() : this.update()
+        this.$emit('successMessage', 'Selected computers have been deleted')
+      }
+    },
+    closeAddPopup: function (eventReturn) {
+      this.$emit(eventReturn.success ? 'successMessage' : 'errorMessage', eventReturn.message)
       this.update()
       this.addComputerDialog = false
     },
-    closeEditPopup: function (id) {
+    closeEditPopup: function (eventReturn, id) {
+      this.$emit(eventReturn.success ? 'successMessage' : 'errorMessage', eventReturn.message)
       this.update()
       this.$set(this.dialog, id, false)
     },
     update: function () {
+      this.selected = []
       if (this.presearch) {
         axios
           .get(
-            'http://10.0.1.248:8081/computer-database/computers?page=' +
+            '/computers?page=' +
               this.page
           )
-          .then((response) => (this.computers = response.data))
-          .catch((error) => console.log(error))
+          .then((response) => { this.computers = response.data })
+          .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
         axios
-          .get('http://10.0.1.248:8081/computer-database/computers/nb')
+          .get('/computers/nb')
           .then((response) => (this.nb_page = response.data.nb))
-          .catch((error) => console.log(error))
+          .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
       } else {
         axios
           .get(
-            'http://10.0.1.248:8081/computer-database/computers/search?page=' +
+            '/computers/search?page=' +
               this.page +
               '&name=' +
               this.search
           )
-          .then((response) => (this.computers = response.data))
-          .catch((error) => console.log(error))
+          .then((response) => { this.computers = response.data })
+          .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
       }
     },
     previousPage: function () {
@@ -152,21 +177,22 @@ export default {
       this.update()
     },
     searcher: function () {
+      this.selected = []
       this.page = 1
       axios
         .get(
-          'http://10.0.1.248:8081/computer-database/computers/search?page=1&name=' +
+          '/computers/search?page=1&name=' +
             this.search
         )
         .then((response) => (this.computers = response.data))
-        .catch((error) => console.log(error))
+        .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
       axios
         .get(
-          'http://10.0.1.248:8081/computer-database/computers/nbsearch?name=' +
+          '/computers/nbsearch?name=' +
             this.search
         )
         .then((response) => (this.nb_page = response.data.nb))
-        .catch((error) => console.log(error))
+        .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
       this.presearch = false
     }
   }
@@ -183,6 +209,15 @@ th {
   color: white;
   cursor: pointer;
 
+}
+
+.table {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.deleteIcon {
+  float: right;
 }
 
 </style>

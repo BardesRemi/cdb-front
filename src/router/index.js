@@ -1,8 +1,24 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-
+import store from '../plugins/index'
 Vue.use(VueRouter)
+
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters.isAuthenticated) {
+    next()
+    return
+  }
+  next('/')
+}
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next()
+    return
+  }
+  next('/')
+}
 
 const routes = [
   {
@@ -18,27 +34,14 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Dashboard.vue')
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import(/* webpackChunkName: "login" */'../views/Login.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Dashboard.vue'),
+    beforeRouteEnter: ifAuthenticated
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import(/* webpackChunkName: "login" */'../views/Register.vue')
-  },
-  {
-    path: '/addComputer',
-    name: 'AddComputer',
-    component: () => import(/* webpackChunkName: "addComputer" */'../views/AddComputer.vue')
-  },
-  {
-    path: '/editComputer',
-    name: 'EditComputer',
-    component: () => import(/* webpackChunkName: "editComputer" */'../views/EditComputer.vue')
+    component: () => import(/* webpackChunkName: "login" */'../views/Register.vue'),
+    beforeRouteEnter: ifNotAuthenticated
   }
 ]
 

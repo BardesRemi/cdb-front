@@ -1,23 +1,24 @@
 {
-  "editComputer" : "edition d'ordinateur",
-  "addComputer" : "ajouter un ordinateur",
+  "editComputer" : "Ddition d'ordinateur",
+  "addComputer" : "Ajouter un ordinateur",
   "submit": "Valider",
-  "add": "ajout d'ordinateur",
+  "add": "Ajout d'ordinateur",
   "name": "Nom",
   "introduced": "Date d'introduction",
   "discontinued": "Date d'introduction",
   "company" : "Nom de l'entreprise",
   "cancel" : "Annuler",
-  "introduction" : "date d'introduction",
-  "discontinuation" : "date de discontinuation",
-  "company_form" : "entreprise",
+  "introduction" : "Date d'introduction",
+  "discontinuation" : "Date de discontinuation",
+  "company_form" : "Entreprise",
   "ok" : "ok",
   "password" : "Mot de passe",
-  "required" : "obligatoire",
-  "register" : "s'inscrire",
-  "login" : "connexion",
+  "required" : "Obligatoire",
+  "register" : "S'inscrire",
+  "login" : "Connexion",
   "username" : "Nom d'utilisateur",
-  "confirmpassword" : "Confirmation du mot de passe"
+  "confirmpassword" : "Confirmation du mot de passe",
+  "logout" : "Deconnexion"
 
 
   

@@ -2,13 +2,21 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify'
+import store from './plugins'
 import i18n from './i18n'
-import LangFlag from 'vue-lang-code-flags'
+import { axios } from '@/api'
+
 Vue.config.productionTip = false
-Vue.component('lang-flag', LangFlag)
+
+const token = localStorage.getItem('user-token')
+if (token) {
+  axios.defaults.headers.common.Authorization = token
+}
+
 new Vue({
   router,
   vuetify,
+  store,
   i18n,
   render: h => h(App)
 }).$mount('#app')
