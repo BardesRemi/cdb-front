@@ -110,16 +110,7 @@ export default {
     AddComputer
   },
   mounted () {
-    axios
-      .get(
-        '/computers?page=' + this.page
-      )
-      .then((response) => (this.computers = response.data))
-      .catch((error) => console.log(error))
-    axios
-      .get('/computers/nb')
-      .then((response) => (this.nb_page = response.data.nb))
-      .catch((error) => console.log(error))
+    this.update()
   },
   methods: {
     selectAll: function () {
