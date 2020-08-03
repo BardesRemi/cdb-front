@@ -110,6 +110,7 @@ export default {
     AddComputer
   },
   mounted () {
+    axios.defaults.headers.Authorization = 'Bearer ' + localStorage.getItem('user-token')
     this.update()
   },
   methods: {

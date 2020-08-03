@@ -13,6 +13,7 @@ const getters = {
 const actions = {
   [USER_REQUEST]: ({ commit, dispatch }, user) => {
     commit(USER_REQUEST)
+    localStorage.setItem('username', user.username)
     Axios.get('http://10.0.1.248:8081/computer-database/user/login?username=' + user.username + '&password=' + user.password)
       .then(resp => {
         commit(USER_SUCCESS, resp)

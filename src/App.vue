@@ -109,7 +109,7 @@ export default {
     loginDisplay: false,
     profileStatus: false,
     loggedIn: false,
-    username: ''
+    username: localStorage.getItem('username')
   }),
   created: function () {
     if (this.$store.getters.isAuthenticated) {

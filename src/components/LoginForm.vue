@@ -73,7 +73,7 @@ export default {
       this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
         this.$emit('connect', true)
         this.$emit('update:username', username)
-        this.$router.push('/')
+        this.$router.push('/dashboard')
       }).catch(() => {
         this.$emit('connect', false)
       })
