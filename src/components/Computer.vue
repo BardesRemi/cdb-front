@@ -18,7 +18,7 @@
                 <v-card>
                   <v-card-title class="headline grey lighten-2 justify-center">Add new computer</v-card-title>
                   <v-card-text>
-                    <AddComputer @exit="closeAddPopup()"></AddComputer>
+                    <AddComputer @exit="closeAddPopup($event)"></AddComputer>
                   </v-card-text>
                 </v-card>
               </v-dialog>
@@ -59,7 +59,7 @@
                 <v-card>
                   <v-card-title class="headline grey lighten-2 justify-center">EditComputer</v-card-title>
                   <v-card-text>
-                    <EditComputer :id="parseInt(computer.id)" @exit="closeEditPopup(computer.id)"></EditComputer>
+                    <EditComputer :id="parseInt(computer.id)" @exit="closeEditPopup($event, computer.id)"></EditComputer>
                   </v-card-text>
                 </v-card>
               </v-dialog>
@@ -124,18 +124,20 @@ export default {
       if (selection.length > 0) {
         computerService.delete(selection[0]).then(
           result => this.deleteSelected(selection.slice(1)),
-          error => { alert('Error when deleting computer : ' + error); this.update() }
+          error => { this.$emit('errorMessage', 'Error when deleting computer'); console.error(error); this.update() }
         )
       } else {
         this.computers.length === this.selected.length ? this.previousPage() : this.update()
-        alert('Selected computers have been deleted')
+        this.$emit('successMessage', 'Selected computers have been deleted')
       }
     },
-    closeAddPopup: function () {
+    closeAddPopup: function (eventReturn) {
+      this.$emit(eventReturn.success ? 'successMessage' : 'errorMessage', eventReturn.message)
       this.update()
       this.addComputerDialog = false
     },
-    closeEditPopup: function (id) {
+    closeEditPopup: function (eventReturn, id) {
+      this.$emit(eventReturn.success ? 'successMessage' : 'errorMessage', eventReturn.message)
       this.update()
       this.$set(this.dialog, id, false)
     },
@@ -148,11 +150,11 @@ export default {
               this.page
           )
           .then((response) => { this.computers = response.data })
-          .catch((error) => { console.log(error) })
+          .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
         axios
           .get('/computers/nb')
           .then((response) => (this.nb_page = response.data.nb))
-          .catch((error) => console.log(error))
+          .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
       } else {
         axios
           .get(
@@ -162,7 +164,7 @@ export default {
               this.search
           )
           .then((response) => { this.computers = response.data })
-          .catch((error) => { console.log(error) })
+          .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
       }
     },
     previousPage: function () {
@@ -182,14 +184,14 @@ export default {
             this.search
         )
         .then((response) => (this.computers = response.data))
-        .catch((error) => console.log(error))
+        .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
       axios
         .get(
           '/computers/nbsearch?name=' +
             this.search
         )
         .then((response) => (this.nb_page = response.data.nb))
-        .catch((error) => console.log(error))
+        .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
       this.presearch = false
     }
   }

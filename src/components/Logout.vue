@@ -11,7 +11,7 @@ export default {
   name: 'Logout',
   methods: {
     logout: function () {
-      this.$emit('exit')
+      this.$emit('logout')
       this.$store.dispatch(AUTH_LOGOUT)
         .then(() => {
           this.$router.push('/')

@@ -1,7 +1,7 @@
 <style>
   @import './assets/Home.css';
 
-  .loginDis {
+  .CardDis {
     visibility: visible;
     position: fixed;
     z-index: 3;
@@ -9,9 +9,6 @@
     right: 10px;
   }
 
-  .loginDis.hidden_login {
-    visibility: hidden;
-  }
 </style>
 
 <template >
@@ -29,7 +26,7 @@
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/dashboard" v-if="!display">
+        <v-list-item link to="/dashboard" v-if="loggedIn">
           <v-list-item-action>
             <v-icon>mdi-antenna</v-icon>
           </v-list-item-action>
@@ -37,7 +34,7 @@
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/register" v-if="display">
+        <v-list-item link to="/register" v-if="!loggedIn">
           <v-list-item-action>
             <v-icon>mdi-account-edit</v-icon>
           </v-list-item-action>
@@ -65,24 +62,28 @@
         <b>CBD</b>
       </div>
       <v-spacer></v-spacer>
-      <v-btn icon class="loginButton" @click="loginDisplay = !loginDisplay" v-if="loginDisplay">
+      <v-btn icon class="profilButton" @click="profileStatus = !profileStatus" v-if="loggedIn">
         <v-icon>mdi-account</v-icon>
       </v-btn>
-      <v-btn class="loginButton" @click="loginDisplay = !loginDisplay" v-if="loginDisplay">
-        Logout
-      </v-btn>
-      <v-btn class="loginButton" @click="loginDisplay = !loginDisplay" v-if="!loginDisplay">
+      <div class="logoutButton" v-if="loggedIn">
+        <Logout  @logout="logout()"/>
+      </div>
+      <v-btn class="loginButton" @click="handleVisibility()" v-if="loginButtonDisplay">
         Login
       </v-btn>
     </v-app-bar>
 
     <v-main>
       <router-view/>
-      <div class="loginDis" :class="{hidden_login:!loginDisplay}" v-if="display">
-        <LoginForm @exit="handleVisibility()"/>
+      <div class="CardDis" v-if="profileDisplay">
+        <Profile :username= "username"/>
       </div>
-      <div class="loginDis" :class="{hidden_login:!loginDisplay}" v-if="!display">
-        <Logout  @exit="handleVisibility()"/>
+      <div class="CardDis" v-if="loginFormDisplay">
+        <LoginForm
+          @exit="handleVisibility()"
+          @connect="connectAttempt($event)"
+          @redirectregister="handleVisibility()"
+          v-bind:username.sync="username"/>
       </div>
     </v-main>
   </v-app>
@@ -91,6 +92,7 @@
 <script>
 import LoginForm from './components/LoginForm.vue'
 import Logout from '@/components/Logout'
+import Profile from '@/components/Profile'
 
 export default {
   name: 'App',
@@ -99,24 +101,54 @@ export default {
   },
   components: {
     Logout,
-    LoginForm
+    LoginForm,
+    Profile
   },
   data: () => ({
     drawer: null,
     loginDisplay: false,
-    display: true
+    profileStatus: false,
+    loggedIn: false,
+    username: ''
   }),
   created: function () {
     if (this.$store.getters.isAuthenticated) {
-      this.display = false
+      this.loginDisplay = false
+      this.loggedIn = true
       this.$forceUpdate()
     }
   },
   methods: {
+    connectAttempt: function (result) {
+      if (result === true) {
+        this.loggedIn = true
+      } else {
+        this.loggedIn = false
+      }
+      this.handleVisibility()
+    },
+
     handleVisibility: function () {
-      this.display = !this.display
+      this.loginDisplay = !this.loginDisplay
+    },
+
+    logout () {
+      this.profileStatus = false
+      this.loggedIn = false
+    }
+  },
+  computed: {
+    loginFormDisplay () {
+      return this.loginDisplay && !this.loggedIn
+    },
+
+    loginButtonDisplay () {
+      return !this.loginDisplay && !this.loggedIn
+    },
+
+    profileDisplay () {
+      return this.profileStatus && this.loggedIn
     }
   }
-
 }
 </script>
