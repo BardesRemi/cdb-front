@@ -114,6 +114,7 @@ export default {
   created: function () {
     if (this.$store.getters.isAuthenticated) {
       this.loginDisplay = false
+      this.loggedIn = true
       this.$forceUpdate()
     }
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="addComputer">
-    <ComputerInputForm :computer="computer" :submitFunction="submitFunction" @exit="resendEvent()"></ComputerInputForm>
+    <ComputerInputForm :computer="computer" :submitFunction="submitFunction" @exit="resendEvent($event)"></ComputerInputForm>
   </div>
 </template>
 
@@ -15,11 +15,19 @@ export default {
     return {
       computer: new Computer(0, ''),
       submitFunction (computer) {
+        function eventReturn (success, message) {
+          return {
+            success: success,
+            message: message
+          }
+        }
         const newComputer = { ...computer, id: undefined }
-        computerService.create(newComputer).then(result => this.$emit('exit'), error => {
-          alert('Network error while trying to update the computer')
-          console.log(error)
-        })
+        computerService.create(newComputer).then(
+          result => this.$emit('exit', eventReturn(true, 'Computer successfully added to database')),
+          error => {
+            this.$emit('exit', eventReturn(false, 'Error while trying to add the computer'))
+            console.log(error)
+          })
       }
     }
   },
@@ -27,8 +35,8 @@ export default {
     ComputerInputForm
   },
   methods: {
-    resendEvent: function () {
-      this.$emit('exit')
+    resendEvent: function (state) {
+      this.$emit('exit', state)
     }
   }
 }
