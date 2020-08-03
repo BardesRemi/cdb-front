@@ -99,14 +99,28 @@
           </tbody>
         </template>
       </v-simple-table>
-      <v-col>
-        <v-pagination
-          :length="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
-          v-model="page"
-          @input="update"
-          :total-visible="7"
-        ></v-pagination>
-      </v-col>
+      <v-row justify="center" align="center">
+        <v-col cols="2" class="d-none d-lg-block">
+          <v-slider
+            v-model="page"
+            color="orange"
+            class="pageSelectionSlider d-none d-lg-block"
+            thumb-label
+            :max="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
+            min="1"
+            label="page"
+            @end="changePage">
+          </v-slider>
+        </v-col>
+        <v-col cols="6"  md="8">
+          <v-pagination
+            :length="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
+            v-model="page"
+            @input="update"
+            :total-visible="7"
+          ></v-pagination>
+        </v-col>
+      </v-row>
     </div>
   </v-row>
 </template>
@@ -209,6 +223,9 @@ export default {
       this.page -= 1
       this.update()
     },
+    changePage: function () {
+      this.update()
+    },
     nextPage: function () {
       this.page += 1
       this.update()
@@ -245,6 +262,9 @@ th {
 
 .orderByIcons {
   margin-left: 10px;
+}
+.pageSelectionSlider {
+  width: 100%;
 }
 
 </style>

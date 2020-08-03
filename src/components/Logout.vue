@@ -1,6 +1,6 @@
 <template>
   <div class="logout">
-    <v-btn  @click="logout">LOGOUT</v-btn>
+    <v-btn  @click="logout">{{$t("logout")}}</v-btn>
   </div>
 </template>
 
