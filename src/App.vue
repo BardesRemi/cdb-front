@@ -59,7 +59,7 @@
           transition="scale-transition"
           width="40"
         />
-        <b>CBD</b>
+        <b>CDB</b>
       </div>
       <v-spacer></v-spacer>
       <div>
