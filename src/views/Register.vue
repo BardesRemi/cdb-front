@@ -1,6 +1,10 @@
 <template>
   <div class="login">
-    <RegisterForm msg="Ceci est le formulaire d'inscription"/>
+    <RegisterForm
+      msg="Ceci est le formulaire d'inscription"
+      @errorMessage="resendErrorMessage($event)"
+      @successMessage="resendSuccessMessage($event)"
+    />
   </div>
 </template>
 
@@ -12,6 +16,14 @@ export default {
   name: 'Register',
   components: {
     RegisterForm
+  },
+  methods: {
+    resendErrorMessage (event) {
+      this.$emit('errorMessage', event)
+    },
+    resendSuccessMessage (event) {
+      this.$emit('successMessage', event)
+    }
   }
 }
 </script>

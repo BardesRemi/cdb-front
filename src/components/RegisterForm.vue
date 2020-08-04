@@ -82,7 +82,11 @@ export default {
     createUser () {
       const user = { ...this.user }
       userService.create(user)
-      this.$router.push('/')
+        .then(() => { this.$emit('successMessage', this.$t('register.success')); this.$router.push('/') })
+        .catch((error) => {
+          console.error(error)
+          this.$emit('errorMessage', error.response && error.response.status === 409 ? this.$t('register.used') : this.$t('register.error'))
+        })
     }
   },
 

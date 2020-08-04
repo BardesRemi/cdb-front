@@ -72,7 +72,10 @@
         <v-icon>mdi-account</v-icon>
       </v-btn>
       <div class="logoutButton" v-if="loggedIn">
-        <Logout  @logout="logout()"/>
+        <Logout
+          @logout="logout()"
+          @errorMessage="printErrorMessage($event)"
+          @successMessage="printSuccessMessage($event)"/>
       </div>
       <v-btn class="loginButton" @click="handleVisibility()" v-if="loginButtonDisplay">
         {{$t("login")}}
@@ -80,7 +83,7 @@
     </v-app-bar>
 
     <v-main>
-      <router-view/>
+      <router-view @errorMessage="printErrorMessage($event)" @successMessage="printSuccessMessage($event)"/>
       <div class="CardDis" v-if="profileDisplay">
         <Profile :username= "username"/>
       </div>
@@ -89,8 +92,18 @@
           @exit="handleVisibility()"
           @connect="connectAttempt($event)"
           @redirectregister="handleVisibility()"
-          v-bind:username.sync="username"/>
+          v-bind:username.sync="username"
+          @errorMessage="printErrorMessage($event)"
+          @successMessage="printSuccessMessage($event)"/>
       </div>
+      <v-snackbar v-model="messageVisible" :timeout="timeout" :color="color" top>
+        {{ message }}
+        <template v-slot:action="{ attrs }">
+          <v-btn text v-bind="attrs" @click="messageVisible = false">
+            X
+          </v-btn>
+        </template>
+      </v-snackbar>
     </v-main>
   </v-app>
 </template>
@@ -115,7 +128,11 @@ export default {
     loginDisplay: false,
     profileStatus: false,
     loggedIn: false,
-    username: localStorage.getItem('username')
+    username: localStorage.getItem('username'),
+    message: '',
+    timeout: 6000,
+    color: 'success',
+    messageVisible: false
 
   }),
   created: function () {
@@ -142,6 +159,22 @@ export default {
     logout () {
       this.profileStatus = false
       this.loggedIn = false
+    },
+
+    printMessage (message, color) {
+      this.color = color
+      this.message = message
+      this.messageVisible = true
+      this.resetSnackbar()
+    },
+    printErrorMessage (message) {
+      this.printMessage(message, 'error')
+    },
+    printSuccessMessage (message) {
+      this.printMessage(message, 'success')
+    },
+    resetSnackbar () {
+      this.timeout = this.timeout === 6000 ? 6001 : 6000 // Le timeout doit être modifié pour le relancer
     }
   },
   computed: {

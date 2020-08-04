@@ -23,9 +23,9 @@ export default {
         }
         const newComputer = { ...computer, id: undefined }
         computerService.create(newComputer).then(
-          result => this.$emit('exit', eventReturn(true, 'Computer successfully added to database')),
+          result => this.$emit('exit', eventReturn(true, this.$t('add.success'))),
           error => {
-            this.$emit('exit', eventReturn(false, 'Error while trying to add the computer'))
+            this.$emit('exit', eventReturn(false, this.$t('add.error')))
             console.log(error)
           })
       }

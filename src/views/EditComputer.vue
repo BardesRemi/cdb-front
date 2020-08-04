@@ -25,9 +25,9 @@ export default {
           }
         }
         computerService.edit(computer).then(
-          result => this.$emit('exit', eventReturn(true, 'Computer successfully updated')),
+          result => this.$emit('exit', eventReturn(true, this.$t('edit.success'))),
           error => {
-            this.$emit('exit', eventReturn(false, 'Error while trying to update the computer'))
+            this.$emit('exit', eventReturn(false, this.$t('edit.error')))
             console.log(error)
           })
       }

@@ -11,10 +11,15 @@ export default {
   name: 'Logout',
   methods: {
     logout: function () {
-      this.$emit('logout')
       this.$store.dispatch(AUTH_LOGOUT)
         .then(() => {
+          this.$emit('logout')
+          this.$emit('successMessage', this.$t('logout.success'))
           this.$router.push('/')
+        })
+        .catch((error) => {
+          console.error(error)
+          this.$emit('errorMessage', this.$t('logout.error'))
         })
     }
   }

@@ -73,9 +73,12 @@ export default {
       this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
         this.$emit('connect', true)
         this.$emit('update:username', username)
+        this.$emit('successMessage', this.$t('loggedIn'))
         this.$router.push('/dashboard')
-      }).catch(() => {
+      }).catch((error) => {
         this.$emit('connect', false)
+        this.$emit('errorMessage', this.$t('badCredent'))
+        console.error(error)
       })
     }
 

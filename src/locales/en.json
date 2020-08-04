@@ -14,11 +14,22 @@
   "ok" : "ok",
   "password" : "Password",
   "required" : "required",
-  "register" : "register",
+  "register" : "Register",
   "login" : "login",
   "username" : "Username",
   "confirmpassword" : "Confirmation du mot de passe",
-  "logout" : "Logout"
+  "logout" : "Logout",
+  "loggedIn" : "You are logged in",
+  "badCredent" : "Invalid credentials",
+  "logout.success" : "You are now logged out",
+  "logout.error" : "Error while logging out",
+  "register.success" : "Register completed",
+  "register.used" : "Username already used",
+  "register.error" : "Network error during register",
+  "add.success" : "Computer successfully added to database",
+  "add.error" : "Error while trying to add the computer",
+  "edit.success" : "Computer successfully updated",
+  "edit.error" : "Error while trying to update the computer"
 
 
 
