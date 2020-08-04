@@ -9,7 +9,7 @@
     >
       <v-card-text>
         <p class="text-h6 text-center mb-3">
-          Logged in as :
+          {{$t('logged')}}
         </p>
         <p class="text-button text-center mb-4 ">
           {{username}}

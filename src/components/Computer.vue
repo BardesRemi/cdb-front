@@ -17,7 +17,7 @@
                     <v-btn v-on="on" small>add a new computer</v-btn>
                   </template>
                   <v-card>
-                    <v-card-title class="headline grey lighten-2 justify-center">Add new computer</v-card-title>
+                  <v-card-title class="headline grey lighten-2 justify-center">{{$t('addComputer')}}</v-card-title>
                     <v-card-text>
                       <AddComputer @exit="closeAddPopup($event)"></AddComputer>
                     </v-card-text>
@@ -35,12 +35,12 @@
               <th class="text-left">
                 <v-row>
                   <v-checkbox :input-value="allSelected" @change="selectAll"></v-checkbox>
-                  <v-icon v-if="selected.length > 0" @click="deleteSelected(selected)">delete</v-icon>
+                  <v-icon v-if="selected.length > 0" @click="deleteSelected(selected)">{{$t('delete')}}</v-icon>
                 </v-row>
               </th>
               <th class="text-left">
                 <v-row>
-                  Name
+                  {{$t('name')}}
                   <div class="orderByIcons">
                   <v-icon @click="setOrderBy('name', true)">arrow_upward</v-icon>
                   <v-icon @click="setOrderBy('name', false)">arrow_downward</v-icon>
@@ -49,7 +49,7 @@
               </th>
               <th class="text-left">
                 <v-row>
-                  Introduced
+                  {{$t('introduced')}}
                   <div class="orderByIcons">
                   <v-icon @click="setOrderBy('introduced', true)">arrow_upward</v-icon>
                   <v-icon @click="setOrderBy('introduced', false)">arrow_downward</v-icon>
@@ -58,7 +58,7 @@
               </th>
               <th class="text-left">
                 <v-row>
-                  Discontinued
+                  {{$t('discontinuation')}}
                   <div class="orderByIcons">
                   <v-icon @click="setOrderBy('discontinued', true)">arrow_upward</v-icon>
                   <v-icon @click="setOrderBy('discontinued', false)">arrow_downward</v-icon>
@@ -67,7 +67,7 @@
               </th>
               <th class="text-left">
                 <v-row>
-                  Company Name
+                  {{$t('company')}}
                   <div class="orderByIcons">
                   <v-icon @click="setOrderBy('companyName', true)">arrow_upward</v-icon>
                   <v-icon @click="setOrderBy('companyName', false)">arrow_downward</v-icon>
@@ -91,7 +91,7 @@
                   <td v-on="on">{{computer.name}}</td>
                 </template>
                 <v-card>
-                  <v-card-title class="headline grey lighten-2 justify-center">EditComputer</v-card-title>
+                  <v-card-title class="headline grey lighten-2 justify-center">{{$t('editComputer')}}</v-card-title>
                   <v-card-text>
                     <EditComputer :id="parseInt(computer.id)" @exit="closeEditPopup($event, computer.id)"></EditComputer>
                   </v-card-text>
