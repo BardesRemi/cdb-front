@@ -1,5 +1,5 @@
 {
-  "editComputer" : "Ddition d'ordinateur",
+  "editComputer" : "Edition d'ordinateur",
   "addComputer" : "Ajouter un ordinateur",
   "submit": "Valider",
   "add": "Ajout d'ordinateur",
@@ -21,11 +21,11 @@
   "logout" : "Deconnexion",
   "rulename" : "Le nom de l'utilisateur ne doit pas dépasser les 25 caractères",
   "rulename6" : "Il doit faire plus de 5 caractères",
-  "samepass" : "doit être égal au mot de passe rentré précedemment",
+  "samepass" : "Doit être égal au mot de passe rentré précedemment",
   "search" : "Rechercher",
-  "welcome" : "Bienvenue à CDB ",
+  "welcome" : "Bienvenue sur CDB ",
   "logged" : "Connecté en tant que :"
 
 
-  
+
 }

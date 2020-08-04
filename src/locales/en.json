@@ -7,31 +7,31 @@
   "introduced": "Introduced",
   "discontinued": "Discontinued",
   "company" : "Company name",
-  "cancel" : "cancel",
+  "cancel" : "Cancel",
   "introduction" : "Introduction date",
   "discontinuation" : "Discontinuation date",
-  "company_form" : "company",
+  "company_form" : "Company",
   "ok" : "ok",
   "password" : "Password",
-  "required" : "required",
-  "register" : "register",
-  "login" : "login",
+  "required" : "Required",
+  "register" : "Register",
+  "login" : "Login",
   "username" : "Username",
   "confirmpassword" : "Confirm the password",
   "logout" : "Logout",
   "rulename" : "UserName must be less than 25 characters",
   "rulename6" : "Must be at least 6 characters",
-  "samepass" : "required and equal to password",
+  "samepass" : "Required and equal to password",
   "search" : "Search",
-  "welcome" : "welcome to CDB ",
-  "logged" : "logged in as :"
+  "welcome" : "Welcome to CDB ",
+  "logged" : "Logged in as :"
 
 
 
 
-  
 
-    
 
-  
+
+
+
 }
