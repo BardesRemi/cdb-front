@@ -100,7 +100,7 @@
         </template>
       </v-simple-table>
       <v-row justify="center" align="center">
-        <v-col cols="2" class="d-none d-lg-block">
+        <div class="sliderContainer">
           <v-slider
             v-model="page"
             color="orange"
@@ -109,17 +109,17 @@
             :max="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
             min="1"
             label="page"
-            @end="changePage">
+            @change="changePage">
           </v-slider>
-        </v-col>
-        <v-col cols="6"  md="8">
-          <v-pagination
-            :length="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
-            v-model="page"
-            @input="update"
-            :total-visible="7"
-          ></v-pagination>
-        </v-col>
+        </div>
+      </v-row>
+      <v-row justify="center" align="center">
+        <v-pagination
+          :length="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
+          v-model="page"
+          @input="update"
+          :total-visible="7"
+        ></v-pagination>
       </v-row>
     </div>
   </v-row>
@@ -263,8 +263,9 @@ th {
 .orderByIcons {
   margin-left: 10px;
 }
-.pageSelectionSlider {
-  width: 100%;
+
+.sliderContainer {
+  width: 60%;
 }
 
 </style>

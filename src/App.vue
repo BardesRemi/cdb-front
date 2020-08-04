@@ -123,6 +123,8 @@ export default {
       this.loginDisplay = false
       this.loggedIn = true
       this.$forceUpdate()
+    } else {
+      this.$router.push({ name: 'Home' })
     }
   },
   methods: {
