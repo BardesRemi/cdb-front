@@ -6,15 +6,15 @@
           <v-layout>
             <v-row justify="center" align="center">
               <v-col cols="12" md="4">
-                <v-text-field v-model="search">Search</v-text-field>
+                <v-text-field v-model="search">{{$t('search')}}</v-text-field>
               </v-col>
               <v-col cols="12" md="2">
-                <v-btn v-on:click="searcher" small>Submit</v-btn>
+                <v-btn v-on:click="searcher" small>{{$t('search')}}</v-btn>
               </v-col>
               <v-col cols="12" md="3">
                 <v-dialog v-model="addComputerDialog">
                   <template v-slot:activator="{ on }">
-                    <v-btn v-on="on" small>add a new computer</v-btn>
+                    <v-btn v-on="on" small>{{$t('addComputer')}}</v-btn>
                   </template>
                   <v-card>
                   <v-card-title class="headline grey lighten-2 justify-center">{{$t('addComputer')}}</v-card-title>
