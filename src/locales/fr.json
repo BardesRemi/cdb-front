@@ -23,7 +23,8 @@
   "rulename6" : "Il doit faire plus de 5 caractères",
   "samepass" : "doit être égal au mot de passe rentré précedemment",
   "search" : "Rechercher",
-  "welcome" : "Bienvenue à CDB  "
+  "welcome" : "Bienvenue à CDB ",
+  "logged" : "Connecté en tant que :"
 
 
   

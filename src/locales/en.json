@@ -23,7 +23,8 @@
   "rulename6" : "Must be at least 6 characters",
   "samepass" : "required and equal to password",
   "search" : "Search",
-  "welcome" : "welcome to CDB "
+  "welcome" : "welcome to CDB ",
+  "logged" : "logged in as :"
 
 
 
