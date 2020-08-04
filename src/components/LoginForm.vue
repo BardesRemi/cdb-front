@@ -50,8 +50,8 @@ export default {
       password: '',
       show1: false,
       rules: {
-        required: v => !!v || 'Required',
-        max: v => v.length <= 24 || 'UserName must be less than 25 characters'
+        required: v => !!v || this.$t('required'),
+        max: v => v.length <= 24 || this.$t('rulename')
       }
     }
   },

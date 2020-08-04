@@ -7,18 +7,12 @@
   "introduced": "Introduced",
   "discontinued": "Discontinued",
   "company" : "Company name",
-  "cancel" : "cancel",
+  "cancel" : "Cancel",
   "introduction" : "Introduction date",
   "discontinuation" : "Discontinuation date",
-  "company_form" : "company",
+  "company_form" : "Company",
   "ok" : "ok",
   "password" : "Password",
-  "required" : "required",
-  "register" : "Register",
-  "login" : "login",
-  "username" : "Username",
-  "confirmpassword" : "Confirmation du mot de passe",
-  "logout" : "Logout",
   "loggedIn" : "You are logged in",
   "badCredent" : "Invalid credentials",
   "logout.success" : "You are now logged out",
@@ -29,13 +23,26 @@
   "add.success" : "Computer successfully added to database",
   "add.error" : "Error while trying to add the computer",
   "edit.success" : "Computer successfully updated",
-  "edit.error" : "Error while trying to update the computer"
+  "edit.error" : "Error while trying to update the computer",
+  "required" : "Required",
+  "register" : "Register",
+  "login" : "Login",
+  "username" : "Username",
+  "confirmpassword" : "Confirm the password",
+  "logout" : "Logout",
+  "rulename" : "UserName must be less than 25 characters",
+  "rulename6" : "Must be at least 6 characters",
+  "samepass" : "Required and equal to password",
+  "search" : "Search",
+  "welcome" : "Welcome to CDB ",
+  "logged" : "Logged in as :"
 
 
 
-  
 
-    
 
-  
+
+
+
+
 }

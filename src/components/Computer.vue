@@ -4,25 +4,27 @@
       <v-form>
         <v-container>
           <v-layout>
-            <v-flex xs12 md4>
-              <v-text-field v-model="search">Search</v-text-field>
-            </v-flex>
-            <v-flex xs12 md4>
-              <v-btn v-on:click="searcher" small>Submit</v-btn>
-            </v-flex>
-            <v-flex xs12 md4>
-              <v-dialog v-model="addComputerDialog">
-                <template v-slot:activator="{ on }">
-                  <v-btn v-on="on" small>add a new computer</v-btn>
-                </template>
-                <v-card>
-                  <v-card-title class="headline grey lighten-2 justify-center">Add new computer</v-card-title>
-                  <v-card-text>
-                    <AddComputer @exit="closeAddPopup($event)"></AddComputer>
-                  </v-card-text>
-                </v-card>
-              </v-dialog>
-            </v-flex>
+            <v-row justify="center" align="center">
+              <v-col cols="12" md="4">
+                <v-text-field v-model="search">{{$t('search')}}</v-text-field>
+              </v-col>
+              <v-col cols="12" md="2">
+                <v-btn v-on:click="searcher" small>{{$t('search')}}</v-btn>
+              </v-col>
+              <v-col cols="12" md="3">
+                <v-dialog v-model="addComputerDialog">
+                  <template v-slot:activator="{ on }">
+                    <v-btn v-on="on" small>{{$t('addComputer')}}</v-btn>
+                  </template>
+                  <v-card>
+                  <v-card-title class="headline grey lighten-2 justify-center">{{$t('addComputer')}}</v-card-title>
+                    <v-card-text>
+                      <AddComputer @exit="closeAddPopup($event)"></AddComputer>
+                    </v-card-text>
+                  </v-card>
+                </v-dialog>
+              </v-col>
+            </v-row>
           </v-layout>
         </v-container>
       </v-form>
@@ -33,12 +35,12 @@
               <th class="text-left">
                 <v-row>
                   <v-checkbox :input-value="allSelected" @change="selectAll"></v-checkbox>
-                  <v-icon v-if="selected.length > 0" @click="deleteSelected(selected)">delete</v-icon>
+                  <v-icon v-if="selected.length > 0" @click="deleteSelected(selected)">{{$t('delete')}}</v-icon>
                 </v-row>
               </th>
               <th class="text-left">
                 <v-row>
-                  Name
+                  {{$t('name')}}
                   <div class="orderByIcons">
                   <v-icon @click="setOrderBy('name', true)">arrow_upward</v-icon>
                   <v-icon @click="setOrderBy('name', false)">arrow_downward</v-icon>
@@ -47,7 +49,7 @@
               </th>
               <th class="text-left">
                 <v-row>
-                  Introduced
+                  {{$t('introduced')}}
                   <div class="orderByIcons">
                   <v-icon @click="setOrderBy('introduced', true)">arrow_upward</v-icon>
                   <v-icon @click="setOrderBy('introduced', false)">arrow_downward</v-icon>
@@ -56,7 +58,7 @@
               </th>
               <th class="text-left">
                 <v-row>
-                  Discontinued
+                  {{$t('discontinuation')}}
                   <div class="orderByIcons">
                   <v-icon @click="setOrderBy('discontinued', true)">arrow_upward</v-icon>
                   <v-icon @click="setOrderBy('discontinued', false)">arrow_downward</v-icon>
@@ -65,7 +67,7 @@
               </th>
               <th class="text-left">
                 <v-row>
-                  Company Name
+                  {{$t('company')}}
                   <div class="orderByIcons">
                   <v-icon @click="setOrderBy('companyName', true)">arrow_upward</v-icon>
                   <v-icon @click="setOrderBy('companyName', false)">arrow_downward</v-icon>
@@ -89,7 +91,7 @@
                   <td v-on="on">{{computer.name}}</td>
                 </template>
                 <v-card>
-                  <v-card-title class="headline grey lighten-2 justify-center">EditComputer</v-card-title>
+                  <v-card-title class="headline grey lighten-2 justify-center">{{$t('editComputer')}}</v-card-title>
                   <v-card-text>
                     <EditComputer :id="parseInt(computer.id)" @exit="closeEditPopup($event, computer.id)"></EditComputer>
                   </v-card-text>
@@ -100,25 +102,36 @@
         </template>
       </v-simple-table>
       <v-row justify="center" align="center">
-        <v-col cols="2" class="d-none d-lg-block">
+        <div class="sliderContainer">
           <v-slider
             v-model="page"
             color="orange"
-            class="pageSelectionSlider d-none d-lg-block"
+            class="pageSelectionSlider"
             thumb-label
-            :max="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
+            :max="maxPage"
             min="1"
             label="page"
-            @end="changePage">
+            @change="changePage">
           </v-slider>
-        </v-col>
-        <v-col cols="6"  md="8">
-          <v-pagination
-            :length="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
-            v-model="page"
-            @input="update"
-            :total-visible="7"
-          ></v-pagination>
+        </div>
+      </v-row>
+      <v-row justify="center" align="center">
+        <v-pagination
+          :length="maxPage"
+          v-model="page"
+          @input="update"
+          :total-visible="7"
+        ></v-pagination>
+      </v-row>
+      <v-row justify="center" align="center">
+        <v-col md="2">
+          <v-overflow-btn
+            class="align-center my-2"
+            v-model="pageSize"
+            :items="dropdown_pageSize"
+            label="Page size"
+            @change="pageSizeChange"
+          ></v-overflow-btn>
         </v-col>
       </v-row>
     </div>
@@ -140,9 +153,11 @@ export default {
       addComputerDialog: false,
       dialog: {},
       on: true,
-      nb_page: 15,
+      nbPage: 15,
       data_cube: [],
       page: 1,
+      pageSize: 10,
+      dropdown_pageSize: [10, 15, 20, 25, 50],
       computers: [],
       search: '',
       presearch: true,
@@ -151,7 +166,8 @@ export default {
     }
   },
   computed: {
-    allSelected () { return this.computers.length === this.selected.length && this.selected.length > 0 }
+    allSelected () { return this.computers.length === this.selected.length && this.selected.length > 0 },
+    maxPage () { return Math.max(parseInt((this.nbPage - 1) / this.pageSize, 10) + 1, 1) }
   },
   components: {
     EditComputer,
@@ -202,7 +218,8 @@ export default {
           '/computers?page=' + this.page +
               '&search=' + this.search +
               '&by=' + this.orderByColumn +
-              '&order=' + (this.ascendent ? 'ASC' : 'DESC')
+              '&order=' + (this.ascendent ? 'ASC' : 'DESC') +
+              '&size=' + this.pageSize
         )
         .then((response) => { this.computers = response.data })
         .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
@@ -212,11 +229,11 @@ export default {
             '/computers/nbsearch?name=' +
             this.search
           )
-          .then((response) => (this.nb_page = response.data.nb))
+          .then((response) => (this.nbPage = response.data.nb))
           .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
         : axios
           .get('/computers/nb')
-          .then((response) => (this.nb_page = response.data.nb))
+          .then((response) => (this.nbPage = response.data.nb))
           .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
     },
     previousPage: function () {
@@ -228,6 +245,10 @@ export default {
     },
     nextPage: function () {
       this.page += 1
+      this.update()
+    },
+    pageSizeChange () {
+      this.page = 1
       this.update()
     },
     searcher: function () {
@@ -263,8 +284,9 @@ th {
 .orderByIcons {
   margin-left: 10px;
 }
-.pageSelectionSlider {
-  width: 100%;
+
+.sliderContainer {
+  width: 60%;
 }
 
 </style>

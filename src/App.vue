@@ -51,23 +51,15 @@
     >
       <v-app-bar-nav-icon class="bar-nav-icon" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="assets/excilys.png"
-          transition="scale-transition"
-          width="40"
-        />
-        <b>CDB</b>
-      </div>
-      <v-spacer></v-spacer>
-      <div>
         <select v-model="$i18n.locale">
             <option><div>en</div></option>
             <option>fr</option>
         </select>
       </div>
+      <div class="d-flex align-center" :style="{'margin' : '10px'}">
+        <b> CBD</b>
+      </div>
+      <v-spacer></v-spacer>
       <v-btn icon class="profilButton" @click="profileStatus = !profileStatus" v-if="loggedIn">
         <v-icon>mdi-account</v-icon>
       </v-btn>
@@ -140,6 +132,8 @@ export default {
       this.loginDisplay = false
       this.loggedIn = true
       this.$forceUpdate()
+    } else {
+      this.$router.push({ name: 'Home' })
     }
   },
   methods: {

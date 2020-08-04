@@ -19,7 +19,7 @@
             :rules="[rules.required, rules.min, rules.max, rules.match]"
             :type="show1 ? 'text' : 'password'"
             :label="$t('password')"
-            hint="required"
+            :hint="$t('required')"
             @click:append="show1 = !show1"
           ></v-text-field>
           <v-text-field
@@ -28,7 +28,7 @@
             :rules="[rules.required, rules.match]"
             :type="show2 ? 'text' : 'password'"
             :label="$t('confirmpassword')"
-            hint="required and equal to password"
+            :hint="$t('samepass')"
             @click:append="show2 = !show2"
           ></v-text-field>
         </v-container>
@@ -60,10 +60,10 @@ export default {
       show1: false,
       show2: false,
       rules: {
-        required: v => !!v || 'Required',
-        max: v => v.length <= 24 || 'Must be less than 25 characters',
-        min: v => v.length > 5 || 'Must be at least 6 characters',
-        match: v => (!!v && v) === this.password2 || 'Passwords do not match'
+        required: v => !!v || this.$t('required'),
+        max: v => v.length <= 24 || this.$t('rulename'),
+        min: v => v.length > 5 || this.$t('rulename6'),
+        match: v => (!!v && v) === this.password2 || this.$t('samepass')
       }
     }
   },
