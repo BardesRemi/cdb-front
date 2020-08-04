@@ -36,10 +36,42 @@
                   <v-icon v-if="selected.length > 0" @click="deleteSelected(selected)">{{$t('delete')}}</v-icon>
                 </v-row>
               </th>
-              <th class="text-left">{{$t('name')}}</th>
-              <th class="text-left">{{$t('introduced')}}</th>
-              <th class="text-left">{{$t('discontinuation')}}</th>
-              <th class="text-left">{{$t('company')}}</th>
+              <th class="text-left">
+                <v-row>
+                  {{$t('name')}}
+                  <div class="orderByIcons">
+                  <v-icon @click="setOrderBy('name', true)">arrow_upward</v-icon>
+                  <v-icon @click="setOrderBy('name', false)">arrow_downward</v-icon>
+                  </div>
+                </v-row>
+              </th>
+              <th class="text-left">
+                <v-row>
+                  {{$t('introduced')}}
+                  <div class="orderByIcons">
+                  <v-icon @click="setOrderBy('introduced', true)">arrow_upward</v-icon>
+                  <v-icon @click="setOrderBy('introduced', false)">arrow_downward</v-icon>
+                  </div>
+                </v-row>
+              </th>
+              <th class="text-left">
+                <v-row>
+                  {{$t('discontinuation')}}
+                  <div class="orderByIcons">
+                  <v-icon @click="setOrderBy('discontinued', true)">arrow_upward</v-icon>
+                  <v-icon @click="setOrderBy('discontinued', false)">arrow_downward</v-icon>
+                  </div>
+                </v-row>
+              </th>
+              <th class="text-left">
+                <v-row>
+                  {{$t('company')}}
+                  <div class="orderByIcons">
+                  <v-icon @click="setOrderBy('companyName', true)">arrow_upward</v-icon>
+                  <v-icon @click="setOrderBy('companyName', false)">arrow_downward</v-icon>
+                  </div>
+                </v-row>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -68,7 +100,7 @@
         </template>
       </v-simple-table>
       <v-row justify="center" align="center">
-        <v-col cols="2" class="d-none d-lg-block">
+        <div class="sliderContainer">
           <v-slider
             v-model="page"
             color="orange"
@@ -77,22 +109,17 @@
             :max="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
             min="1"
             label="page"
-            @end="changePage">
+            @change="changePage">
           </v-slider>
-        </v-col>
-        <v-col cols="6"  md="8">
-          <v-pagination width="40%"
-            :length="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
-            v-model="page"
-            @input="update"
-            :total-visible="7"
-          ></v-pagination>
-          <sliding-pagination
-            :current="page"
-            :total="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
-            @page-change="pageChangeHandler"
-          ></sliding-pagination>
-        </v-col>
+        </div>
+      </v-row>
+      <v-row justify="center" align="center">
+        <v-pagination
+          :length="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
+          v-model="page"
+          @input="update"
+          :total-visible="7"
+        ></v-pagination>
       </v-row>
     </div>
   </v-row>
@@ -118,7 +145,9 @@ export default {
       page: 1,
       computers: [],
       search: '',
-      presearch: true
+      presearch: true,
+      orderByColumn: '',
+      ascendent: true
     }
   },
   computed: {
@@ -133,8 +162,9 @@ export default {
     this.update()
   },
   methods: {
-    pageChangeHandler: function (selectedPage) {
-      this.page = selectedPage
+    setOrderBy (column, ascendent) {
+      this.orderByColumn = column
+      this.ascendent = ascendent
       this.update()
     },
     selectAll: function () {
@@ -167,29 +197,27 @@ export default {
     },
     update: function () {
       this.selected = []
-      if (this.presearch) {
-        axios
+      axios
+        .get(
+          '/computers?page=' + this.page +
+              '&search=' + this.search +
+              '&by=' + this.orderByColumn +
+              '&order=' + (this.ascendent ? 'ASC' : 'DESC')
+        )
+        .then((response) => { this.computers = response.data })
+        .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
+      this.search
+        ? axios
           .get(
-            '/computers?page=' +
-              this.page
+            '/computers/nbsearch?name=' +
+            this.search
           )
-          .then((response) => { this.computers = response.data })
+          .then((response) => (this.nb_page = response.data.nb))
           .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
-        axios
+        : axios
           .get('/computers/nb')
           .then((response) => (this.nb_page = response.data.nb))
           .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
-      } else {
-        axios
-          .get(
-            '/computers/search?page=' +
-              this.page +
-              '&name=' +
-              this.search
-          )
-          .then((response) => { this.computers = response.data })
-          .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
-      }
     },
     previousPage: function () {
       this.page -= 1
@@ -205,21 +233,7 @@ export default {
     searcher: function () {
       this.selected = []
       this.page = 1
-      axios
-        .get(
-          '/computers/search?page=1&name=' +
-            this.search
-        )
-        .then((response) => (this.computers = response.data))
-        .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
-      axios
-        .get(
-          '/computers/nbsearch?name=' +
-            this.search
-        )
-        .then((response) => (this.nb_page = response.data.nb))
-        .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
-      this.presearch = false
+      this.update()
     }
   }
 }
@@ -246,8 +260,12 @@ th {
   float: right;
 }
 
-.pageSelectionSlider {
-  width: 100%;
+.orderByIcons {
+  margin-left: 10px;
+}
+
+.sliderContainer {
+  width: 60%;
 }
 
 </style>
