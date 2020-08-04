@@ -21,7 +21,9 @@
   "logout" : "Logout",
   "rulename" : "UserName must be less than 25 characters",
   "rulename6" : "Must be at least 6 characters",
-  "samepass" : "required and equal to password"
+  "samepass" : "required and equal to password",
+  "search" : "Search",
+  "welcome" : "welcome to CDB "
 
 
 

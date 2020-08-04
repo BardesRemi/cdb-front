@@ -4,7 +4,7 @@
 <template>
   <div class="Home">
     <img alt="Vue logo" src="../assets/excilys.png">
-    <h1>Welcome to CDB : </h1>
+    <h1>{{$t('welcome')}} </h1>
   </div>
 </template>
 

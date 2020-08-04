@@ -21,7 +21,9 @@
   "logout" : "Deconnexion",
   "rulename" : "Le nom de l'utilisateur ne doit pas dépasser les 25 caractères",
   "rulename6" : "Il doit faire plus de 5 caractères",
-  "samepass" : "doit être égal au mot de passe rentré précedemment"
+  "samepass" : "doit être égal au mot de passe rentré précedemment",
+  "search" : "Rechercher",
+  "welcome" : "Bienvenue à CDB  "
 
 
   
