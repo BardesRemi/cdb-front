@@ -81,12 +81,17 @@
           </v-slider>
         </v-col>
         <v-col cols="6"  md="8">
-          <v-pagination
+          <v-pagination width="40%"
             :length="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
             v-model="page"
             @input="update"
             :total-visible="7"
           ></v-pagination>
+          <sliding-pagination
+            :current="page"
+            :total="Math.max(parseInt((nb_page - 1) / 10, 10) + 1)"
+            @page-change="pageChangeHandler"
+          ></sliding-pagination>
         </v-col>
       </v-row>
     </div>
@@ -128,6 +133,10 @@ export default {
     this.update()
   },
   methods: {
+    pageChangeHandler: function (selectedPage) {
+      this.page = selectedPage
+      this.update()
+    },
     selectAll: function () {
       if (this.allSelected) {
         this.selected = []
