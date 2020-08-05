@@ -55,8 +55,8 @@ export default {
     return {
       companyList: [],
       nameRules: [
-        name => !!name || 'The name field is required',
-        name => /^[a-zA-Z0-9 \-/_+]+$/.test(name) || 'No special characters are allowed except " +-/_"'
+        name => !!name || this.$t('required.name'),
+        name => /^[a-zA-Z0-9 \-/_+.]+$/.test(name) || this.$t('special.characters')
       ],
       dialog1: false,
       dialog2: false
@@ -77,7 +77,7 @@ export default {
     isIntroSet () { this.resetDiscontinuedDate(); return !!this.computer.introduced }, // Returns true if set
     maxAllowedDate () { return this.computer.discontinued || '2031-01-01' },
     minAllowedDate () { return this.computer.introduced || '1970-01-01' },
-    checksOk () { return !!this.computer.name && /^[a-zA-Z0-9 \-/_+]+$/.test(this.computer.name) }
+    checksOk () { return !!this.computer.name && /^[a-zA-Z0-9 \-/_+.]+$/.test(this.computer.name) }
   },
   mounted () {
     companyService.findAll().then(result => { this.companyList = result.data }, error => console.error(error))

@@ -194,11 +194,11 @@ export default {
       if (selection.length > 0) {
         computerService.delete(selection[0]).then(
           result => this.deleteSelected(selection.slice(1)),
-          error => { this.$emit('errorMessage', 'Error when deleting computer'); console.error(error); this.update() }
+          error => { this.$emit('errorMessage', this.$t('delete.error')); console.error(error); this.update() }
         )
       } else {
         this.computers.length === this.selected.length ? this.previousPage() : this.update()
-        this.$emit('successMessage', 'Selected computers have been deleted')
+        this.$emit('successMessage', this.$t('delete.success'))
       }
     },
     closeAddPopup: function (eventReturn) {
@@ -222,7 +222,7 @@ export default {
               '&size=' + this.pageSize
         )
         .then((response) => { this.computers = response.data })
-        .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
+        .catch((error) => { console.error(error); this.$emit('errorMessage', this.$t('database.error')) })
       this.search
         ? axios
           .get(
@@ -230,11 +230,11 @@ export default {
             this.search
           )
           .then((response) => (this.nbPage = response.data.nb))
-          .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
+          .catch((error) => { console.error(error); this.$emit('errorMessage', this.$t('database.error')) })
         : axios
           .get('/computers/nb')
           .then((response) => (this.nbPage = response.data.nb))
-          .catch((error) => { console.error(error); this.$emit('errorMessage', 'Error while querying the database') })
+          .catch((error) => { console.error(error); this.$emit('errorMessage', this.$t('database.error')) })
     },
     previousPage: function () {
       this.page -= 1

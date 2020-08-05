@@ -35,7 +35,12 @@
   "samepass" : "Doit être égal au mot de passe rentré précedemment",
   "search" : "Rechercher",
   "welcome" : "Bienvenue sur CDB ",
-  "logged" : "Connecté en tant que :"
+  "logged" : "Connecté en tant que :",
+  "required.name" : "Le champ nom est requis",
+  "special.characters" : "Aucun caractère spécial n'est autorisé, excepté +-/_.",
+  "delete.error" : "Erreur lors de la suppression de l'ordinateur",
+  "delete.success" : "Le ou les ordinateurs sélectionnés ont été supprimés",
+  "database.error" : "Erreur lors de l'accès à la base de données"
 
 
 

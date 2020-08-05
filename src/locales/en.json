@@ -35,7 +35,13 @@
   "samepass" : "Required and equal to password",
   "search" : "Search",
   "welcome" : "Welcome to CDB ",
-  "logged" : "Logged in as :"
+  "logged" : "Logged in as :",
+  "required.name" : "The name field is required",
+  "special.characters" : "No special characters are allowed except  +-/_.",
+  "delete.error" : "Error when deleting computer",
+  "delete.success" : "Selected computers have been deleted",
+  "database.error" : "Error while querying the database"
+
 
 
 
